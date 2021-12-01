@@ -1,8 +1,8 @@
 import React, { createContext, useEffect, useContext } from "react";
 import { useRouter } from "next/router";
-import { auth } from "../Utils/firebase";
+import { auth, logout } from "../Utils/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { logout } from "../Utils/firebase";
+import axios from "axios";
 
 const UserContext = createContext();
 
@@ -18,6 +18,13 @@ export default function UserProvider(props) {
     //If the user is not authorized, kick them to the home page
     if (loading) return;
     if (!user) return router.push("/");
+
+    const fetch = async () => {
+      let { data } = await axios.get(`/api/user/${user.uid}`);
+      console.log(data);
+    };
+
+    fetch();
   }, [user, loading]);
 
   const LogOut = async () => {

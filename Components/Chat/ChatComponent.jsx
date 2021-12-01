@@ -1,7 +1,9 @@
 import React from "react";
-import { useUser } from "./UserContext";
+import { useUser } from "../UserContext";
 import SocketProvider from "./SocketContext";
 import MessageArea from "./MessageArea";
+import Chats from "./Chats";
+import { ChatProvider } from "./ChatContext";
 
 const ChatComponent = () => {
   const { user, loading } = useUser();
@@ -12,10 +14,12 @@ const ChatComponent = () => {
 
   return (
     <SocketProvider id={user.uid}>
-      <div>
-        <h1>Chat</h1>
-        <MessageArea />
-      </div>
+      <ChatProvider>
+        <div style={{ display: "flex", width: "100vw" }}>
+          <Chats />
+          <MessageArea />
+        </div>
+      </ChatProvider>
     </SocketProvider>
   );
 };

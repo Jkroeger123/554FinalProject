@@ -1,3 +1,4 @@
+//USED FOR CLIENT SIDE
 import { initializeApp, getApp, getApps } from "@firebase/app";
 import {GoogleAuthProvider, getAuth, signInWithPopup} from '@firebase/auth';
 

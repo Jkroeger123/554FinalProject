@@ -1,6 +1,6 @@
 import React from "react";
 import UserProvider from "../Components/UserContext";
-import ChatComponent from "../Components/ChatComponent";
+import ChatComponent from "../Components/Chat/ChatComponent";
 
 function Chat() {
   return (
