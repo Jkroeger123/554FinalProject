@@ -5,10 +5,6 @@ import { Typography } from "@mui/material";
 import { useChat } from "./ChatContext";
 
 function Conversation({ conversation }) {
-  if (user) {
-    console.log(user);
-  }
-
   const { setSelectedChat } = useChat();
 
   const OnClick = () => {
