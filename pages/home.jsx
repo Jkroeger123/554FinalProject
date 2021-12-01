@@ -6,7 +6,7 @@ function Dashboard() {
   return (
     <UserProvider>
       <div>
-        <h1>Home</h1>
+        <h1>Home- Test pull</h1>
         <a href="/chat">Chat</a>
         <LogOutButton />
       </div>
