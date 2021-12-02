@@ -29,6 +29,7 @@ export default function Home() {
       <br />
       <h1>Test</h1>
       <br />
+      <h2>Demo</h2>
       
     </div>
   )
