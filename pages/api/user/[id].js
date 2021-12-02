@@ -1,4 +1,5 @@
-import db from '../../../utils/db';
+import db from '../../../Utils/db';
+
 
 export default async (req, res) => {
   
