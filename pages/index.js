@@ -29,7 +29,7 @@ export default function Home() {
       <br />
       <h1>Test Change</h1>
       <br />
-      <h2>This is a new feature</h2>
+      <h2><b>This is a new feature</b></h2>
       <br />
       <h2>AWS is cool</h2>
       
