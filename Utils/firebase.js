@@ -10,10 +10,10 @@ const firebaseConfig = {
     messagingSenderId: "73038711698",
     appId: "1:73038711698:web:13a79dfd685bba04758f4b"
 };
-
+/*
 console.log(process.env.REACT_APP_FIREBASE_APIKEY);
 
-/*
+
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
@@ -21,8 +21,8 @@ const firebaseConfig = {
   storageBucket: process.env.REACT_APP_FIREBASE_STORAGEBUCKET,
   messagingSenderId: process.env.REACT_APP_FIREBASE_MESSASGESENDERID,
   appId: process.env.REACT_APP_FIREBASE_APPID
-};*/
-
+};
+*/
 if (!getApps().length) {
     const app = initializeApp(firebaseConfig);
  }else {
