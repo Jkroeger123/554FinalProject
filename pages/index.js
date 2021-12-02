@@ -31,6 +31,7 @@ export default function Home() {
       <br />
       <h2>This is a new feature</h2>
       <br />
+      <h2>AWS is cool</h2>
       
     </div>
   )
