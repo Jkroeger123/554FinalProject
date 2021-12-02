@@ -29,6 +29,7 @@ export default function Home() {
       <br />
       <h1>Test</h1>
       <br />
+      <h2>This is the feature branch</h2>
       
     </div>
   )
