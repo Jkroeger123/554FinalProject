@@ -27,8 +27,9 @@ export default function Home() {
 
       <br />
       <br />
-      <h1>Test Staging</h1>
+      <h1>Test Change</h1>
       <br />
+      <h2>This is a new feature</h2>
       
     </div>
   )
