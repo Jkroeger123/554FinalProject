@@ -6,9 +6,8 @@ import Message from "./Message";
 import { useChat } from "./ChatContext";
 import { useUser } from "../UserContext";
 import { v4 as uuidv4 } from "uuid";
-
-//To be replaced with database
-import Conversations from "../../Conversation";
+import { auth } from "../../Utils/firebase";
+import axios from "axios";
 
 function MessageArea() {
   const { user } = useUser();
@@ -28,9 +27,18 @@ function MessageArea() {
     //Clear message UI
     setMessages([]);
 
-    //Load message UI with stored messages
-    let convo = Conversations.find((c) => c.recepient === selectedChat);
-    if (convo) setMessages(convo.messages);
+    const fetch = async () => {
+      let token = await auth.currentUser.getIdToken();
+      let { data } = await axios.post(`/api/getMessages`, {
+        idToken: token,
+      });
+
+      //Load message UI with stored messages
+      let convo = data.find((c) => c.recepient === selectedChat);
+      if (convo) setMessages(convo.messages);
+    };
+
+    fetch();
   }, [selectedChat]);
 
   useEffect(() => {
@@ -40,18 +48,26 @@ function MessageArea() {
 
   const OnSendClicked = async () => {
     socket.emit("send", { recipient: id, msg: message });
-    AddMessage({ sender: user.uid, message });
+
+    setMessages((prev) => [
+      ...prev,
+      { message, sender: user.uid, id: uuidv4() },
+    ]);
+
     setMessage("");
+
+    let token = await auth.currentUser.getIdToken();
+    await axios.post(`/api/addMessage`, {
+      idToken: token,
+      message: { recepient: id, message: message },
+    });
   };
 
-  const AddMessage = ({ sender, message }) => {
-    let d = new Date();
-
-    messages.push({ message, sender, date: d.toISOString(), id: uuidv4() });
-
-    //TODO: Add message to Database
-
-    setMessages(messages);
+  const AddMessage = async ({ sender, message }) => {
+    setMessages((prev) => [
+      ...prev,
+      { message, recepient: user.uid, id: uuidv4() },
+    ]);
     setCount(count + 1);
   };
 
@@ -69,11 +85,11 @@ function MessageArea() {
       </div>
 
       <Stack direction="column" spacing={2}>
-        {messages.map((m) => (
+        {messages.map((m, index) => (
           <Message
             message={m.message}
-            self={m.sender === user.uid}
-            key={m.id}
+            self={m.recepient !== user.uid}
+            key={index}
           />
         ))}
       </Stack>

@@ -20,7 +20,11 @@ export default function UserProvider(props) {
     if (!user) return router.push("/");
 
     const fetch = async () => {
-      let { data } = await axios.get(`/api/user/${user.uid}`);
+      let token = await auth.currentUser.getIdToken();
+      let { data } = await axios.post(`/api/user`, {
+        idToken: token,
+        message: {},
+      });
       console.log(data);
     };
 

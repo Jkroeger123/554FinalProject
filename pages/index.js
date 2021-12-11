@@ -24,13 +24,7 @@ export default function Home() {
       </Head>
 
       <button onClick={OnGooglePressed}>Sign In With Google</button>
-
-      <br />
-      <br />
-      <h1>Test</h1>
-      <br />
-      <h2>Demo</h2>
-      
+  
     </div>
   )
 }
