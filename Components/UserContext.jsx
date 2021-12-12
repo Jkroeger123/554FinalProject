@@ -25,7 +25,6 @@ export default function UserProvider(props) {
         idToken: token,
         message: {},
       });
-      console.log(data);
     };
 
     fetch();

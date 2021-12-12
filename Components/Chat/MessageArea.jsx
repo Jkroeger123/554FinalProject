@@ -3,20 +3,19 @@ import { useSocket } from "./SocketContext";
 import { Button, Stack, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Message from "./Message";
-import { useChat } from "./ChatContext";
 import { useUser } from "../UserContext";
 import { v4 as uuidv4 } from "uuid";
 import { auth } from "../../Utils/firebase";
 import axios from "axios";
 
-function MessageArea() {
+function MessageArea({ selectedChat }) {
   const { user } = useUser();
-  const { selectedChat } = useChat();
   const socket = useSocket();
   const [id, setID] = useState("");
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([]);
   const [count, setCount] = useState(0);
+  const [name, setName] = useState("");
 
   useEffect(() => {
     console.log(`Chat Switched to ${selectedChat}, user is: ${user.uid}`);
@@ -31,11 +30,14 @@ function MessageArea() {
       let token = await auth.currentUser.getIdToken();
       let { data } = await axios.post(`/api/getMessages`, {
         idToken: token,
+        id: selectedChat,
       });
 
       //Load message UI with stored messages
-      let convo = data.find((c) => c.recepient === selectedChat);
-      if (convo) setMessages(convo.messages);
+      if (data) {
+        setMessages(data.messages);
+        setName(data.displayName);
+      }
     };
 
     fetch();
@@ -81,7 +83,7 @@ function MessageArea() {
       }}
     >
       <div>
-        <Typography align="center">{selectedChat}</Typography>
+        <Typography align="center">{name}</Typography>
       </div>
 
       <Stack direction="column" spacing={2}>
