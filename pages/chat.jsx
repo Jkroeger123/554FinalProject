@@ -1,13 +1,11 @@
 import React from "react";
 import UserProvider from "../Components/UserContext";
-import ChatComponent from "../Components/Chat/ChatComponent";
+import Chats from "../Components/Chat/Chats";
 
 function Chat() {
   return (
     <UserProvider>
-      <div>
-        <ChatComponent />
-      </div>
+      <Chats />
     </UserProvider>
   );
 }
