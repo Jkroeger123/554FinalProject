@@ -4,7 +4,7 @@ import Chats from "../Components/Chat/Chats";
 
 function Chat() {
   return (
-    <UserProvider>
+    <UserProvider protectedRoute>
       <Chats />
     </UserProvider>
   );
