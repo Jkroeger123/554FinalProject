@@ -3,35 +3,43 @@ import { Typography } from "@mui/material";
 
 function Message({ message, self }) {
   const style = {
-    width: "100%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    width: "80%",
     display: "flex",
-  };
-
-  const messageStyle = {
-    width: "min-content",
-    maxWidth: "25%",
-    borderRadius: "0% 30% 30% 30%",
-    backgroundColor: "#e8e8e8",
   };
 
   const selfStyle = {
-    width: "100%",
+    marginLeft: "auto",
+    marginRight: "auto",
+    width: "80%",
     display: "flex",
     flexDirection: "row-reverse",
-    marginRight: "16px",
+  };
+
+  const messageStyle = {
+    borderRadius: "20px 20px 20px 0px",
+    padding: "16px",
+    backgroundColor: "#B4B4B4",
   };
 
   const selfMessageStyle = {
-    width: "min-content",
-    maxWidth: "25%",
-    borderRadius: "30% 0% 30% 30%",
-    backgroundColor: "#e8e8e8",
+    borderRadius: "20px 20px 0px 20px",
+    padding: "16px",
+    backgroundColor: "#B4B4B4",
   };
 
   return (
     <div style={self ? selfStyle : style}>
       <div style={self ? selfMessageStyle : messageStyle}>
-        <Typography sx={{ padding: "16px", overflowWrap: "break-word" }}>
+        <Typography
+          variant="p"
+          sx={{
+            fontSize: "28px",
+            overflowWrap: "break-word",
+            color: "white",
+          }}
+        >
           {message}
         </Typography>
       </div>

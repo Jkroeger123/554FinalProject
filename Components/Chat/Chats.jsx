@@ -28,14 +28,14 @@ function Chats() {
           display: "flex",
           flexDirection: "column",
           alignContent: "center",
-          width: "400px",
           minHeight: "100vh",
+          margin: "32px",
         }}
       >
-        <Typography variant="h3" sx={{ margin: "16px" }}>
-          Chats
+        <Typography variant="h3" sx={{ margin: "16px", color: "#2A265A" }}>
+          Direct Messages
         </Typography>
-        <Divider />
+        <Divider sx={{ borderColor: "#C0C0C0" }} />
         <Stack direction="column" spacing={2} sx={{ margin: "16px" }}>
           {conversations.map((c, index) => (
             <Conversation conversation={c} key={index} />
