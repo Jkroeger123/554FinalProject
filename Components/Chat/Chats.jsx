@@ -12,7 +12,7 @@ function Chats() {
   useEffect(() => {
     const fetch = async () => {
       let token = await auth.currentUser.getIdToken();
-      let { data } = await axios.post(`/api/getMessages`, {
+      let { data } = await axios.post(`/api/getConversations`, {
         idToken: token,
       });
       setConversations(data);
