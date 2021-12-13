@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useSocket } from "./SocketContext";
-import { Button, Stack, Typography } from "@mui/material";
+import { Button, Stack, Typography, Divider, Avatar } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import Message from "./Message";
 import { useUser } from "../UserContext";
@@ -16,6 +16,8 @@ function MessageArea({ selectedChat }) {
   const [messages, setMessages] = useState([]);
   const [count, setCount] = useState(0);
   const [name, setName] = useState("");
+  const [photoURL, setPhotoURL] = useState("");
+  const messageEl = useRef(null);
 
   useEffect(() => {
     console.log(`Chat Switched to ${selectedChat}, user is: ${user.uid}`);
@@ -37,11 +39,21 @@ function MessageArea({ selectedChat }) {
       if (data) {
         setMessages(data.messages);
         setName(data.displayName);
+        setPhotoURL(data.photoURL);
       }
     };
 
     fetch();
   }, [selectedChat]);
+
+  useEffect(() => {
+    if (messageEl) {
+      messageEl.current.addEventListener("DOMNodeInserted", (event) => {
+        const { currentTarget: target } = event;
+        target.scroll({ top: target.scrollHeight, behavior: "smooth" });
+      });
+    }
+  }, []);
 
   useEffect(() => {
     if (!socket) return;
@@ -65,7 +77,7 @@ function MessageArea({ selectedChat }) {
     });
   };
 
-  const AddMessage = async ({ sender, message }) => {
+  const AddMessage = async ({ message }) => {
     setMessages((prev) => [
       ...prev,
       { message, recepient: user.uid, id: uuidv4() },
@@ -76,27 +88,45 @@ function MessageArea({ selectedChat }) {
   return (
     <div
       style={{
+        margin: "32px",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
-        width: "33%",
       }}
     >
-      <div>
-        <Typography align="center">{name}</Typography>
+      <div style={{ marginBottom: "32px" }}>
+        <Avatar
+          src={photoURL}
+          style={{
+            width: "80px",
+            height: "80px",
+            margin: "auto",
+            marginBottom: "16px",
+          }}
+        />
+        <Typography
+          align="center"
+          variant="h1"
+          style={{ fontSize: "30px", marginBottom: "16px" }}
+        >
+          {name}
+        </Typography>
+        <Divider sx={{ borderColor: "#C0C0C0" }} />
       </div>
 
-      <Stack direction="column" spacing={2}>
-        {messages.map((m, index) => (
-          <Message
-            message={m.message}
-            self={m.recepient !== user.uid}
-            key={index}
-          />
-        ))}
-      </Stack>
+      <div style={{ height: "53vh", overflowY: "scroll" }} ref={messageEl}>
+        <Stack direction="column" spacing={2}>
+          {messages.map((m, index) => (
+            <Message
+              message={m.message}
+              self={m.recepient !== user.uid}
+              key={index}
+            />
+          ))}
+        </Stack>
+      </div>
 
-      <div style={{ position: "fixed", bottom: "0", margin: "16px" }}>
+      <div style={{ margin: "auto", marginTop: "64px" }}>
         <Stack direction="row" spacing={2}>
           <TextField
             aria-label="Message Form"
