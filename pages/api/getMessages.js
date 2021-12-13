@@ -32,6 +32,8 @@ export default async (req, res) => {
             if(!otherConversations) otherConversations = [];
 
             let convo = otherConversations.find(convo => convo.recepient == uid);
+            if (!convo) return res.status(200).json({...conversation, displayName, photoURL});
+
             let allMessages = [...conversation.messages, ...convo.messages];
             allMessages.sort((m1, m2) => {
                 return m1.time.toDate() - m2.time.toDate()
