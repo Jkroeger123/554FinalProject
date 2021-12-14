@@ -42,10 +42,23 @@ const schema = {
       nullable: false,
       errorMessage: { type: "school must be String" },
     },
+    condition: {
+      type: "string",
+      nullable: false,
+      errorMessage: { type: "condition must be String" },
+    },
   },
 };
 
-const addListing = async (image, title, description, price, madeBy, school) => {
+const addListing = async (
+  image,
+  title,
+  description,
+  price,
+  madeBy,
+  school,
+  condition
+) => {
   const newListingData = {
     image,
     title,
@@ -53,6 +66,7 @@ const addListing = async (image, title, description, price, madeBy, school) => {
     price,
     madeBy,
     school,
+    condition,
   };
 
   // validate new listing fields
@@ -65,6 +79,7 @@ const addListing = async (image, title, description, price, madeBy, school) => {
     "price",
     "madeBy",
     "school",
+    "condition",
   ];
 
   const validate = ajv.compile(newListingSchema);
