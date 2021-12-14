@@ -14,6 +14,8 @@ function Listing() {
   if (id) {
     return (
       <UserProvider>
+        <br />
+        <br />
         <ListingComponent selectedListing={id} />
       </UserProvider>
     );
