@@ -9,7 +9,7 @@ function AvatarButton() {
     <Avatar
       alt={user.displayName}
       src={user.photoURL}
-      style={{ width: "80px", height: "80px", cursor: "pointer" }}
+      style={{ width: "10vh", height: "10vh", cursor: "pointer" }}
       onClick={LogOut}
     />
   );

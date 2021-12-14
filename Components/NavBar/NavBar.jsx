@@ -31,7 +31,7 @@ function NavBar() {
           aria-label="menu"
           sx={{ marginLeft: "32px" }}
         >
-          <HomeIcon sx={{ fontSize: "80px" }} />
+          <HomeIcon sx={{ fontSize: "10vh" }} />
         </IconButton>
 
         <div style={{ display: "flex", gap: "32px", marginRight: "4rem" }}>
@@ -41,7 +41,7 @@ function NavBar() {
               color="inherit"
               aria-label="menu"
             >
-              <ChatIcon sx={{ fontSize: "80px" }} />
+              <ChatIcon sx={{ fontSize: "10vh" }} />
             </IconButton>
           </UserProvider>
 
@@ -51,7 +51,7 @@ function NavBar() {
               color="inherit"
               aria-label="menu"
             >
-              <FavoriteBorderIcon sx={{ fontSize: "80px" }} />
+              <FavoriteBorderIcon sx={{ fontSize: "10vh" }} />
             </IconButton>
           </UserProvider>
 
