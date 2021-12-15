@@ -3,6 +3,7 @@ import Card from "./ListingCard/ListingCard";
 import { Grid, Typography, Divider, Button } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import axios from "axios";
+import React from "react";
 
 function Listings() {
   const [school, setSchool] = useState("Stevens Institute of Technology");
@@ -51,7 +52,7 @@ function Listings() {
         </Button>
       </div>
 
-      <Divider />
+      <Divider sx={{ borderColor: "#C0C0C0" }} />
 
       <Grid
         container
@@ -64,8 +65,8 @@ function Listings() {
         }}
       >
         {listings.map((l) => (
-          <Grid item xs={12} sm={4} md={3} key={l.id}>
-            <Card data={l} />
+          <Grid item xs={12} sm={4} md={3}>
+            <Card data={l} key={l.id} />
           </Grid>
         ))}
       </Grid>

@@ -64,7 +64,7 @@ function Chats() {
           margin: "32px",
         }}
       >
-        <Typography variant="h3" sx={{ margin: "16px", color: "#2A265A" }}>
+        <Typography variant="h4" component="div" sx={{color: '#2A265A', marginLeft: '50px', marginTop: '35px', marginBottom: '25px'}}>
           Direct Messages
         </Typography>
         <Divider sx={{ borderColor: "#C0C0C0" }} />
