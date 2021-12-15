@@ -1,4 +1,4 @@
-import db, {auth} from '../../utils/db';
+import db, {auth} from '../../Utils/db';
 
 export default async (req, res) => {
   
@@ -20,7 +20,7 @@ export default async (req, res) => {
             let conversation = conversations.find(c => c.recepient == id);
 
             if(!conversation){
-                return res.status(404).json({message: 'conversation not found'});
+                conversation = {recepient: id, messages: []};
             }
 
             //Find and merge the recepients conversation messages
