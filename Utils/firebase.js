@@ -1,6 +1,7 @@
 //USED FOR CLIENT SIDE
 import { initializeApp, getApp, getApps } from "@firebase/app";
 import {GoogleAuthProvider, getAuth, signInWithPopup} from '@firebase/auth';
+import axios from 'axios';
 
 const firebaseConfig = {
     apiKey: "AIzaSyCZ_0mTbKFw0jIxyePAdU9A2BkIAs52pzE",
@@ -25,7 +26,16 @@ const signInWithGoogle = async () => {
   try {
     const res = await signInWithPopup(auth, googleProvider);
     const user = res.user;
-    return user;
+
+    //Check if user is in database : If not, add them.
+    let idToken = await auth.currentUser.getIdToken();
+
+    let newUser = await axios.post('/api/createUser', {
+      idToken,
+      user
+    })
+
+    return newUser;
   } catch (err) {
     console.error(err);
   }
