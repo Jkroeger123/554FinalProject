@@ -1,4 +1,4 @@
-import db, {auth} from '../../utils/db';
+import db, {auth} from '../../Utils/db';
 import {firestore} from 'firebase-admin';
 
 export default async (req, res) => {
@@ -31,8 +31,9 @@ export default async (req, res) => {
 
             //Create the conversation if it was not found
             if (!found){
-                conversations.push({recepient: message.recepient, messages: [{recepient: message.recepient, message: message.message, time: firestore.Timestamp.fromDate(new Date())}]})
+                newConversations.push({recepient: message.recepient, messages: [{recepient: message.recepient, message: message.message, time: firestore.Timestamp.fromDate(new Date())}]})
             }
+
 
             //Check Recepient DB and creatae conversation entry if it does not exist
             let otherUser = await db.collection('users').doc(message.recepient).get();

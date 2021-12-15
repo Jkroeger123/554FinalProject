@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from "../UserContext";
+import { auth } from "../../Utils/firebase";
+import { useRouter } from "next/router";
 
-import { Grid, Card, CardHeader, CardContent, Typography } from "@mui/material";
+import { Grid, Stack, Button } from "@mui/material";
 
 const ListingComponent = ({ selectedListing }) => {
+  const router = useRouter();
   const [listing, setListing] = useState({});
   const { user, loading } = useUser();
 
@@ -53,6 +56,20 @@ const ListingComponent = ({ selectedListing }) => {
         <h3>Details:</h3>
         <p>{listing.description}</p>
       </Grid>
+
+      {user.uid == listing.posterID ? (
+        <></>
+      ) : (
+        <Stack direction="row" spacing={2}>
+          <Button
+            onClick={() => {
+              router.push(`/chat/${listing.posterID}`);
+            }}
+          >
+            Contact {listing.madeBy}
+          </Button>
+        </Stack>
+      )}
     </Grid>
   );
 
