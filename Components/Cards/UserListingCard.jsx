@@ -11,7 +11,8 @@ import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 function MediaCard({data}) {
 
-    const [isActive, setIsActive] = useState(false)
+    const [isActive, setIsActive] = useState(!data.active)
+    //needs to change active value to !active when clicked
 
     return (
         <Card sx={{ maxWidth: 200, position: 'relative' }}>

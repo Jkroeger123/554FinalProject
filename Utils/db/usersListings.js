@@ -1,7 +1,7 @@
 const data = [{
     id: "1234542543",
     image: "/../../public/images/sofa.jpg",
-    title: "Off White Sofa",
+    title: "Listing title 1",
     description: "Soft off white sofa, purchased from Wayfair in December of 2019. Barely used by owner. No stains or rips.",
     condition: "Basically New",
     price: "55",
@@ -15,7 +15,7 @@ const data = [{
 {
     id: "1234542544",
     image: "/../../public/images/sofa.jpg",
-    title: "Small Coffee Table",
+    title: "listing title 2",
     description: "Wooden small coffee table, purchased from Target in February of 2017. No stains, small scratches - barely able to see.",
     condition: "Slightly Worn",
     price: "25",
@@ -29,7 +29,7 @@ const data = [{
 {
     id: "1234542545",
     image: "/../../public/images/sofa.jpg",
-    title: "Cube Storage",
+    title: "listing title three",
     description: "Each cubby is 12x12.Product is wooden. Has some scratches and dinks, especially on the corners. Bought from Target in 2015",
     condition: "Worn",
     price: "15",
@@ -49,9 +49,37 @@ const data = [{
     madeBy: "N/A",
     uploadDate: "November 7, 2021",
     school: "Stevens Institute of Technology",
-    city: "Jersey City",
+    city: "Jsersey City",
     state: "NJ",
     active: true
+},
+{
+    id: "1234542545",
+    image: "/../../public/images/sofa.jpg",
+    title: "listing title four",
+    description: "Each cubby is 12x12.Product is wooden. Has some scratches and dinks, especially on the corners. Bought from Target in 2015",
+    condition: "Worn",
+    price: "15",
+    madeBy: "Target",
+    uploadDate: "August 21, 2021",
+    school: "Stevens Institute of Technology",
+    city: "Jersey City",
+    state: "NJ",
+    active: false
+},
+{
+    id: "1234542545",
+    image: "/../../public/images/sofa.jpg",
+    title: "listing title five",
+    description: "Each cubby is 12x12.Product is wooden. Has some scratches and dinks, especially on the corners. Bought from Target in 2015",
+    condition: "Worn",
+    price: "15",
+    madeBy: "Target",
+    uploadDate: "August 21, 2021",
+    school: "Stevens Institute of Technology",
+    city: "Jersey City",
+    state: "NJ",
+    active: false
 }];
 export default data;
    

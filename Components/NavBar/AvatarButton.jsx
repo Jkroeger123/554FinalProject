@@ -12,7 +12,7 @@ function AvatarButton() {
       alt={user.displayName}
       src={user.photoURL}
       style={{ width: "10vh", height: "10vh", cursor: "pointer" }}
-      onClick={() => router.push('/profile/about')}
+      onClick={() => router.push('/profile')}
     />
   );
 }

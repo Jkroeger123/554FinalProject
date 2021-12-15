@@ -47,7 +47,7 @@ function NavBar() {
 
           <UserProvider fallback={<></>}>
             <IconButton
-              onClick={() => router.push("/saved")}
+              onClick={() => router.push("/favorites")}
               color="inherit"
               aria-label="menu"
             >

@@ -39,19 +39,6 @@ const data = [{
     city: "Jersey City",
     state: "NJ",
     active: true
-},{
-    id: "1234542546",
-    image: "/../../public/images/sofa.jpg",
-    title: "Rectangular Coffee Table",
-    description: "Wooden small coffee table, purchased in February of 2020. No stains, no scratches. Basically new",
-    condition: "New",
-    price: "35",
-    madeBy: "N/A",
-    uploadDate: "November 7, 2021",
-    school: "Stevens Institute of Technology",
-    city: "Jersey City",
-    state: "NJ",
-    active: true
 }];
 export default data;
    

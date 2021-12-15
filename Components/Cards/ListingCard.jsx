@@ -12,6 +12,9 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 function MediaCard({data}) {
 
     const [isFavorite, setIsFavorite] = useState(false)
+    //full heart needs to add listing to favorites db
+    //unhearting listing should take it out of favorites db
+    //if listing becomes unactive, the listing should be taken out of favorites 
 
     return (
         <Card sx={{ maxWidth: 200, position: 'relative' }}>

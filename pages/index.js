@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Listings from './home/Listings'
+import Listings from './home/listings'
 
 export default function Home() {
 
