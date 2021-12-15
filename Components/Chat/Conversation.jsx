@@ -11,8 +11,6 @@ function Conversation({ conversation }) {
     router.push(`/chat/${conversation.recepient}`);
   };
 
-  console.log(conversation);
-
   return (
     <>
       <Stack
@@ -40,7 +38,9 @@ function Conversation({ conversation }) {
               fontSize: "20px",
             }}
           >
-            {conversation.lastMessage.message}
+            {conversation.lastMessage
+              ? conversation.lastMessage.message
+              : "No Messages"}
           </Typography>
         </Stack>
       </Stack>

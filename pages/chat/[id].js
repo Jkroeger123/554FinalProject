@@ -8,7 +8,7 @@ function DirectMessage() {
     const { query } = useRouter();
 
     return (
-        <UserProvider>
+        <UserProvider protectedRoute>
             <ChatComponent selectedChat={query.id} />
         </UserProvider>
     )

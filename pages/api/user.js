@@ -2,7 +2,7 @@ import db, {auth} from '../../utils/db';
 
 export default async (req, res) => {
   
-    let {idToken} = req.body;
+    let {idToken, userID} = req.body;
 
     try
     {
@@ -10,7 +10,7 @@ export default async (req, res) => {
         .then( async (decodedToken) => {
 
             const uid = decodedToken.uid;
-            let user = await db.collection('users').doc(uid).get();
+            let user = await db.collection('users').doc(userID).get();
             res.status(200).json({displayName: user.get("displayName"), photoURL: user.get("photoURL")});
         })
         .catch((error) => {

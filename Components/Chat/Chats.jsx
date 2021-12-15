@@ -4,9 +4,11 @@ import Stack from "@mui/material/Stack";
 import { Typography } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import { auth } from "../../Utils/firebase";
+import { useSocket } from "./SocketContext";
 import axios from "axios";
 
 function Chats() {
+  const socket = useSocket();
   const [conversations, setConversations] = useState([]);
 
   useEffect(() => {
@@ -20,6 +22,36 @@ function Chats() {
 
     fetch();
   }, []);
+
+  useEffect(() => {
+    if (!socket) return;
+    socket.on("receive", AddMessage);
+  }, [socket, AddMessage]);
+
+  const AddMessage = async ({ sender, message }) => {
+    const convo = conversations.find((c) => c.recepient == sender);
+
+    //If the convo exists, then update the most recent message
+    if (convo) {
+      setConversations((prev) => {
+        return prev.map((c) => {
+          if (c.recepient == sender) {
+            c.lastMessage = { recepient: sender, message: message };
+          }
+          return c;
+        });
+      });
+    } else {
+      //If the convo doesnt exist, poll the database -- TODO: make this better
+      setTimeout(async () => {
+        let token = await auth.currentUser.getIdToken();
+        let { data } = await axios.post(`/api/getConversations`, {
+          idToken: token,
+        });
+        setConversations(data);
+      }, 2000);
+    }
+  };
 
   return (
     <>
@@ -37,8 +69,8 @@ function Chats() {
         </Typography>
         <Divider sx={{ borderColor: "#C0C0C0" }} />
         <Stack direction="column" spacing={2} sx={{ margin: "16px" }}>
-          {conversations.map((c, index) => (
-            <Conversation conversation={c} key={index} />
+          {conversations.map((c) => (
+            <Conversation conversation={c} key={c.recepient} />
           ))}
         </Stack>
       </div>
