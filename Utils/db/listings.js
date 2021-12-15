@@ -8,6 +8,8 @@ const data = [{
     madeBy: "Wayfair",
     uploadDate: "December 7, 2021",
     school: "Stevens Institute of Technology",
+    city: "Hoboken",
+    state: "NJ",
     active: "true"
 },
 {
@@ -20,6 +22,8 @@ const data = [{
     madeBy: "Target",
     uploadDate: "November 13, 2021",
     school: "Stevens Institute of Technology",
+    city: "Hoboken",
+    state: "NJ",
     active: "true"
 },
 {
@@ -32,6 +36,8 @@ const data = [{
     madeBy: "Target",
     uploadDate: "August 21, 2021",
     school: "Stevens Institute of Technology",
+    city: "Jersey City",
+    state: "NJ",
     active: "true"
 },{
     id: "1234542546",
@@ -43,6 +49,8 @@ const data = [{
     madeBy: "N/A",
     uploadDate: "November 7, 2021",
     school: "Stevens Institute of Technology",
+    city: "Jsersey City",
+    state: "NJ",
     active: "true"
 }];
 export default data;
