@@ -71,15 +71,10 @@ const ListingComponent = ({ selectedListing }) => {
                   }}
                 >
                   <div>
-                    {/* <ListingForm
+                    <ListingForm
                       formTitle="Edit Listing"
                       username={user.displayName}
                       endpoint={`/api/listing/update/${listing.id}`}
-                    /> */}
-                    <ListingForm
-                      formTitle="Create a New Listing"
-                      username={user.displayName}
-                      endpoint={`/api/listing/create`}
                     />
                   </div>
                 </Modal>

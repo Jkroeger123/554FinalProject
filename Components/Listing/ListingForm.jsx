@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { validateListing } from "../../Utils/db/schema";
+import { makeStyles } from "@mui/styles";
+import { useUser } from "../UserContext";
 
 import {
   Box,
@@ -14,8 +16,24 @@ import {
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 
+const useStyles = makeStyles({
+  "update-listing-form": {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    bgcolor: "background.paper",
+    border: "1px solid #000",
+    boxShadow: 24,
+    width: "75%",
+  },
+  "new-listing-form": {},
+});
+
 const ListingForm = (props) => {
-  const { formTitle, endpoint, username } = props;
+  const styles = useStyles();
+  const { formTitle, endpoint } = props;
+  const { user } = useUser();
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState(0);
   const [condition, setCondition] = useState("");
@@ -38,11 +56,10 @@ const ListingForm = (props) => {
 
     // TODO: upload Image
     const imageURI =
-      "https://www.rd.com/wp-content/uploads/2019/09/GettyImages-621924830-scaled.jpg";
+      "https://merriam-webster.com/assets/mw/images/article/art-wap-article-main/surfing-dog-photo-is-funner-or-funnest-a-real-word-5670-6d512231d0a52079b0c9fbf474f9a6c9@1x.jpg";
 
     // TODO: get school
     const school = "Stevens Institute of Technology";
-    console.log(JSON.stringify(errors));
 
     // object
     const listingData = {
@@ -50,7 +67,7 @@ const ListingForm = (props) => {
       title: title.trim(),
       description: description.trim(),
       price,
-      madeBy: username.trim(),
+      madeBy: user.displayName,
       school,
       condition: condition.trim(),
     };
@@ -87,16 +104,13 @@ const ListingForm = (props) => {
 
   return (
     <Card
-      style={{
-        position: "absolute",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%, -50%)",
-        bgcolor: "background.paper",
-        border: "1px solid #000",
-        boxShadow: 24,
-        width: "75%",
-      }}
+      className={
+        styles[
+          formTitle === "Edit Listing"
+            ? "update-listing-form"
+            : "new-listing-form"
+        ]
+      }
     >
       <CardContent>
         <Typography variant="h5" align="center">
