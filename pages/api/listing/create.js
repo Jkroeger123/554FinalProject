@@ -1,9 +1,9 @@
-import listings from "../../../../Utils/db/listings";
-import { validateListing } from "../../../../Utils/db/schema";
+import listings from "../../../Utils/db/listings";
+import { validateListing } from "../../../Utils/db/schema";
 
 export default async (req, res) => {
-  const { id } = req.query;
   const { listingData } = req.body;
+
   try {
     const validationError = validateListing(listingData);
     if (validationError) {
@@ -16,7 +16,7 @@ export default async (req, res) => {
   }
 
   try {
-    const { data } = await listings.updateListing(id, listingData);
+    const { data } = await listings.createListing(listingData);
     res.status(200).json(data);
   } catch (e) {
     console.log(e);

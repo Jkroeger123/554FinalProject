@@ -1,5 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
+import { validateListing } from "../../Utils/db/schema";
+
 import {
   Box,
   Button,
@@ -19,38 +21,68 @@ const ListingForm = (props) => {
   const [condition, setCondition] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState({ file: null });
+  const [errors, setErrors] = useState({
+    title: false,
+    price: false,
+    condition: false,
+    description: false,
+  });
 
   const onSubmit = async (e) => {
+    e.preventDefault();
+
+    setErrors({
+      ...errors,
+      condition: false,
+    });
+
     // TODO: upload Image
     const imageURI =
-      "https://www.collinsdictionary.com/images/full/duckling_94339759.jpg";
+      "https://www.rd.com/wp-content/uploads/2019/09/GettyImages-621924830-scaled.jpg";
 
     // TODO: get school
     const school = "Stevens Institute of Technology";
+    console.log(JSON.stringify(errors));
 
     // object
-    const newListingData = {
+    const listingData = {
       image: imageURI,
       title: title.trim(),
       description: description.trim(),
-      price: price,
+      price,
       madeBy: username.trim(),
       school,
       condition: condition.trim(),
     };
 
-    console.log(newListingData);
-
     // remove null values from new listing data
-    Object.keys(newListingData).forEach(
-      (k) => !newListingData[k] && delete newListingData[k]
+    Object.keys(listingData).forEach(
+      (k) => !listingData[k] && delete listingData[k]
     );
 
-    let { data } = await axios.post(endpoint, {
-      newListingData,
-    });
+    const validationError = validateListing(
+      listingData,
+      formTitle === "Create a New Listing"
+    );
 
-    console.log(data);
+    if (validationError) {
+      if (formTitle === "Create a New Listing") {
+        const newErrors = {};
+        validationError.forEach((e) => {
+          newErrors[e.params.missingProperty] = true;
+        });
+        setErrors({ ...errors, ...newErrors });
+      }
+      if (formTitle === "Edit Listing") {
+        validationError.forEach((e) => {
+          setErrors({ ...errors, [e.instancePath.slice(1)]: true });
+        });
+      }
+    } else {
+      await axios.post(endpoint, {
+        listingData,
+      });
+    }
   };
 
   return (
@@ -75,15 +107,23 @@ const ListingForm = (props) => {
           <form>
             <TextField
               onChange={(e) => {
-                setTitle(e.target.value);
+                {
+                  setTitle(e.target.value);
+                  setErrors({ ...errors, title: false });
+                }
               }}
               label="Title"
               fullWidth
               margin="normal"
+              error={errors.title}
+              required={formTitle === "Create a New Listing"}
             />
             <TextField
               onChange={(e) => {
-                setPrice(parseInt(e.target.value));
+                {
+                  setPrice(parseInt(e.target.value));
+                  setErrors({ ...errors, price: false });
+                }
               }}
               label="Price"
               fullWidth
@@ -94,24 +134,39 @@ const ListingForm = (props) => {
                   <InputAdornment position="start">$</InputAdornment>
                 ),
               }}
+              error={errors.price}
+              required={formTitle === "Create a New Listing"}
             />
             <TextField
               onChange={(e) => {
-                setCondition(e.target.value);
+                {
+                  setCondition(e.target.value);
+                  setErrors({ ...errors, condition: false });
+                }
               }}
               label="Condition"
               fullWidth
               margin="normal"
+              error={errors.condition}
+              required={formTitle === "Create a New Listing"}
             />
             <TextField
               onChange={(e) => {
-                setDescription(e.target.value);
+                {
+                  setDescription(e.target.value);
+                  setErrors({
+                    ...errors,
+                    description: false,
+                  });
+                }
               }}
               label="Description"
               multiline
               rows={5}
               fullWidth
               margin="normal"
+              error={errors.description}
+              required={formTitle === "Create a New Listing"}
             />
             <input
               accept="image/*"
@@ -133,7 +188,9 @@ const ListingForm = (props) => {
                 size="large"
                 endIcon={<CloudUploadIcon />}
               >
-                <Typography>Upload Image</Typography>
+                <Typography>
+                  Upload Image{formTitle === "Create a New Listing" ? "*" : ""}
+                </Typography>
               </Button>
               &nbsp;
               {image.file && image.file.name ? image.file.name : ""}
