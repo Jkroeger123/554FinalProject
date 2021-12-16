@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useUser } from "../UserContext";
-import { auth } from "../../Utils/firebase";
-import { useRouter } from "next/router";
-
-import { Grid, Stack, Button } from "@mui/material";
+import Contact from "../Chat/Contact";
+import { Grid, Typography } from "@mui/material";
+import UserProvider from "../UserContext";
 
 const ListingComponent = ({ selectedListing }) => {
-  const router = useRouter();
   const [listing, setListing] = useState({});
-  const { user, loading } = useUser();
 
   useEffect(() => {
     const fetch = async () => {
@@ -22,7 +18,7 @@ const ListingComponent = ({ selectedListing }) => {
     fetch();
   }, []);
 
-  if (!listing.id || loading) return <h1>Loading</h1>;
+  if (!listing.id) return <h1>Loading</h1>;
 
   return (
     <Grid container justifyContents="center">
@@ -57,34 +53,13 @@ const ListingComponent = ({ selectedListing }) => {
         <p>{listing.description}</p>
       </Grid>
 
-      {user.uid == listing.posterID ? (
-        <></>
-      ) : (
-        <Stack direction="row" spacing={2}>
-          <Button
-            onClick={() => {
-              router.push(`/chat/${listing.posterID}`);
-            }}
-          >
-            Contact {listing.madeBy}
-          </Button>
-        </Stack>
-      )}
+      <UserProvider
+        fallback={<Typography>Sign In to Contact {listing.madeBy}</Typography>}
+      >
+        <Contact listing={listing} />
+      </UserProvider>
     </Grid>
   );
-
-  // return (
-  // <div>
-  {
-    /* <p>{JSON.stringify(listing)}</p> */
-  }
-  {
-    /* <p>{user ? JSON.stringify(user) : "No user"}</p> */
-  }
-  {
-    /* </div> */
-  }
-  // );
 };
 
 export default ListingComponent;
