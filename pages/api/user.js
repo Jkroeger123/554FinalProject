@@ -11,7 +11,7 @@ export default async (req, res) => {
 
             const uid = decodedToken.uid;
             let user = await db.collection('users').doc(userID).get();
-            res.status(200).json({displayName: user.get("displayName"), photoURL: user.get("photoURL")});
+            res.status(200).json({...user.data()});
         })
         .catch((error) => {
             res.status(400).end();

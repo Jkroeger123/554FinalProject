@@ -4,6 +4,8 @@ import { Grid, Typography, Divider, Button } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import axios from "axios";
 import SelectSchool from "./SelectSchool";
+import UserProvider from "./UserContext";
+import UserSchool from "./UserSchool";
 
 function Listings() {
   const [school, setSchool] = useState("Stevens Institute of Technology");
@@ -47,7 +49,9 @@ function Listings() {
           }}
         >
           <LocationOnIcon sx={{ fontSize: "30px" }} />
-          <SelectSchool setSchool={setSchool} />
+          <UserProvider fallback={<SelectSchool setSchool={setSchool} />}>
+            <UserSchool setSchool={setSchool} />
+          </UserProvider>
         </div>
       </div>
 
