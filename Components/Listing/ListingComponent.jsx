@@ -73,8 +73,9 @@ const ListingComponent = ({ selectedListing }) => {
                   <div>
                     <ListingForm
                       formTitle="Edit Listing"
-                      username={user.displayName}
+                      setListing={setListing}
                       endpoint={`/api/listing/update/${listing.id}`}
+                      setOpen={setOpen}
                     />
                   </div>
                 </Modal>

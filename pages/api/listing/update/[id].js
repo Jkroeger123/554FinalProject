@@ -16,8 +16,8 @@ export default async (req, res) => {
   }
 
   try {
-    const { data } = await listings.updateListing(id, listingData);
-    res.status(200).json(data);
+    const updatedListing = await listings.updateListing(id, listingData);
+    res.status(200).json(updatedListing);
   } catch (e) {
     console.log(e);
     res.status(400).end();

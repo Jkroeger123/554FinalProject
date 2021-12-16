@@ -16,8 +16,8 @@ export default async (req, res) => {
   }
 
   try {
-    const { data } = await listings.createListing(listingData);
-    res.status(200).json(data);
+    const newListing = await listings.createListing(listingData);
+    res.status(200).json(newListing);
   } catch (e) {
     console.log(e);
     res.status(400).end();

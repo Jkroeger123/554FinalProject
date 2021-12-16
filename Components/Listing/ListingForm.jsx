@@ -32,7 +32,7 @@ const useStyles = makeStyles({
 
 const ListingForm = (props) => {
   const styles = useStyles();
-  const { formTitle, endpoint } = props;
+  const { formTitle, setListing, setOpen, endpoint } = props;
   const { user } = useUser();
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState(0);
@@ -96,9 +96,17 @@ const ListingForm = (props) => {
         });
       }
     } else {
-      await axios.post(endpoint, {
+      const { data } = await axios.post(endpoint, {
         listingData,
       });
+
+      if (setListing) {
+        setListing(data);
+      }
+
+      if (setOpen) {
+        setOpen(false);
+      }
     }
   };
 
