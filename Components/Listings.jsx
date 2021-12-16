@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import Card from "./ListingCard/ListingCard";
+import Card from "./Cards/ListingCard";
 import { Grid, Typography, Divider, Button } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import axios from "axios";
-import React from "react";
+import SelectSchool from "./SelectSchool";
+import UserProvider from "./UserContext";
+import UserSchool from "./UserSchool";
 
 function Listings() {
   const [school, setSchool] = useState("Stevens Institute of Technology");
@@ -38,18 +40,19 @@ function Listings() {
         >
           Nearby Listings
         </Typography>
-        <Button
-          variant="text"
-          sx={{
-            color: "#A92C68",
-            marginRight: "50px",
-            marginTop: "35px",
-            marginBottom: "35px",
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            margin: "32px",
+            gap: "32px",
           }}
         >
-          <LocationOnIcon />
-          <Typography variant="h5">{school}</Typography>
-        </Button>
+          <LocationOnIcon sx={{ fontSize: "30px" }} />
+          <UserProvider fallback={<SelectSchool setSchool={setSchool} />}>
+            <UserSchool setSchool={setSchool} />
+          </UserProvider>
+        </div>
       </div>
 
       <Divider sx={{ borderColor: "#C0C0C0" }} />
@@ -65,8 +68,8 @@ function Listings() {
         }}
       >
         {listings.map((l) => (
-          <Grid item xs={12} sm={4} md={3}>
-            <Card data={l} key={l.id} />
+          <Grid item xs={12} sm={4} md={3} key={l.id}>
+            <Card data={l} />
           </Grid>
         ))}
       </Grid>
