@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useUser } from "../UserContext";
-import { Button, Card, Grid, Modal, Typography } from "@mui/material";
+import { Button, Grid, Modal, Typography } from "@mui/material";
 import ListingForm from "./ListingForm";
 
 const ListingComponent = ({ selectedListing }) => {
@@ -20,7 +20,7 @@ const ListingComponent = ({ selectedListing }) => {
     fetch();
   }, []);
 
-  if (!listing.id || loading) return <h1>Loading</h1>;
+  if (!listing.id || loading) return <h1>Loading...</h1>;
 
   return (
     <>
@@ -70,11 +70,13 @@ const ListingComponent = ({ selectedListing }) => {
                     setOpen(false);
                   }}
                 >
-                  <ListingForm
-                    formTitle="Edit Listing"
-                    username={user.displayName}
-                    apiRoute={`/api/updateListing/${listing.id}`}
-                  />
+                  <div>
+                    <ListingForm
+                      formTitle="Edit Listing"
+                      username={user.displayName}
+                      endpoint={`/api/listing/update/${listing.id}`}
+                    />
+                  </div>
                 </Modal>
               </>
             ) : (
