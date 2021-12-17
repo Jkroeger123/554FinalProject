@@ -1,95 +1,16 @@
 import db from "./index.js";
-import Ajv from "ajv";
-import ajvErrors from "ajv-errors";
-
-const ajv = new Ajv({ removeAdditional: true, allErrors: true, $data: true });
-ajvErrors(ajv);
+import { validateListing } from "./schema";
 
 // get listings collection
 const listings = db.collection("listings");
 
-const schema = {
-  type: "object",
-  additionalProperties: false,
-  properties: {
-    image: {
-      type: "string",
-      nullable: false,
-      errorMessage: { type: "image must be String" },
-    },
-    title: {
-      type: "string",
-      nullable: false,
-      errorMessage: { type: "title must be String" },
-    },
-    description: {
-      type: "string",
-      nullable: false,
-      errorMessage: { type: "image must be String" },
-    },
-    price: {
-      type: "integer",
-      nullable: false,
-      errorMessage: { type: "price must be Integer" },
-    },
-    madeBy: {
-      type: "string",
-      nullable: false,
-      errorMessage: { type: "madeBy must be String" },
-    },
-    school: {
-      type: "string",
-      nullable: false,
-      errorMessage: { type: "school must be String" },
-    },
-    condition: {
-      type: "string",
-      nullable: false,
-      errorMessage: { type: "condition must be String" },
-    },
-  },
-};
-
-const addListing = async (
-  image,
-  title,
-  description,
-  price,
-  madeBy,
-  school,
-  condition
-) => {
-  const newListingData = {
-    image,
-    title,
-    description,
-    price,
-    madeBy,
-    school,
-    condition,
-  };
-
+const createListing = async (newListingData) => {
   // validate new listing fields
-  const newListingSchema = { ...schema };
+  const validationError = validateListing(newListingData, true);
 
-  newListingSchema.required = [
-    "image",
-    "title",
-    "description",
-    "price",
-    "madeBy",
-    "school",
-    "condition",
-  ];
-
-  const validate = ajv.compile(newListingSchema);
-
-  const valid = validate(newListingData);
-
-  if (!valid) {
-    throw new Error(validate.errors[0].message);
+  if (validationError) {
+    throw new Error(validationError[0].message);
   }
-
   // create a document for new listing
   const listingDoc = listings.doc();
 
@@ -137,19 +58,25 @@ const updateListing = async (id, updatedListingData) => {
     !Object.keys(updatedListingData).length
   ) {
     throw new Error(
-      "Expected a non-empty argument of type 'object' for listing update."
+      "Expected an argument of type 'object' for listing update."
     );
   }
 
+  // remove empty fields
+  Object.keys(updatedListingData).forEach(
+    (k) => !updatedListingData[k] && delete updatedListingData[k]
+  );
+
+  // check if any fields remain to update
+  if (!Object.keys(updatedListingData).length) {
+    throw new Error("Expected at least one field to update for listing.");
+  }
+
   // validate updated listing schema
-  const updatedListingSchema = { ...schema };
+  const validationError = validateListing(updatedListingData);
 
-  const validate = ajv.compile(updatedListingSchema);
-
-  const valid = validate(updatedListingData);
-
-  if (!valid) {
-    throw new Error(validate.errors[0].message);
+  if (validationError) {
+    throw new Error(validationError[0].message);
   }
 
   // update listing date to reflect date of latest change
@@ -252,7 +179,7 @@ const removeListing = async (id) => {
 };
 
 export default {
-  addListing,
+  createListing,
   getListingById,
   getActiveListingsByUser,
   getInactiveListingsByUser,
