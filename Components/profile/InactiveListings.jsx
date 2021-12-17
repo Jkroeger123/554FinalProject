@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../Cards/UserListingCard";
-import data from "../../Utils/db/usersListings";
-import { Grid, Typography, Divider, Button } from "@mui/material";
+import { Grid } from "@mui/material";
+import { useUser } from "../UserContext";
+import axios from "axios";
 
 export default function InactiveListings() {
+  const [data, setData] = useState([]);
+  const { user } = useUser();
+
+  useEffect(() => {
+    const fetch = async () => {
+      let { data } = await axios.post("/api/getInactiveListings", {
+        uid: user.uid,
+      });
+      setData(data);
+    };
+    fetch();
+  }, []);
+
   return (
     <div>
       <Grid

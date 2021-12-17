@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 import UserProvider from "../UserContext";
 import AvatarButton from "./AvatarButton";
 import SignInButton from "./SignInButton";
+import AddIcon from "@mui/icons-material/Add";
 
 function NavBar() {
   const router = useRouter();
@@ -35,6 +36,15 @@ function NavBar() {
         </IconButton>
 
         <div style={{ display: "flex", gap: "32px", marginRight: "4rem" }}>
+          <UserProvider fallback={<></>}>
+            <IconButton
+              onClick={() => router.push("/listing/new")}
+              color="inherit"
+              aria-label="menu"
+            >
+              <AddIcon sx={{ fontSize: "10vh" }} />
+            </IconButton>
+          </UserProvider>
           <UserProvider fallback={<></>}>
             <IconButton
               onClick={() => router.push("/chat")}
