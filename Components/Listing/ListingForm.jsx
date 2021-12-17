@@ -3,7 +3,13 @@ import axios from "axios";
 import { validateListing } from "../../Utils/db/schema";
 import { makeStyles } from "@mui/styles";
 import { useUser } from "../UserContext";
-
+import { auth } from "../../Utils/firebase";
+import {
+  getStorage,
+  ref,
+  uploadString,
+  getDownloadURL,
+} from "firebase/storage";
 import {
   Box,
   Button,
@@ -15,6 +21,8 @@ import {
   Typography,
 } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import SelectSchool from "../SelectSchool";
+import { v4 as uuidv4 } from "uuid";
 
 const useStyles = makeStyles({
   "update-listing-form": {
@@ -35,16 +43,28 @@ const ListingForm = (props) => {
   const { formTitle, setListing, setOpen, endpoint } = props;
   const { user } = useUser();
   const [title, setTitle] = useState("");
+  const [school, setSchool] = useState("");
   const [price, setPrice] = useState(0);
   const [condition, setCondition] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState({ file: null });
+  const [imageTitle, setImageTitle] = useState();
   const [errors, setErrors] = useState({
     title: false,
     price: false,
     condition: false,
     description: false,
   });
+
+  const onImageChanged = (e) => {
+    let file = e.target.files[0];
+    setImageTitle(file.name);
+    let reader = new FileReader();
+    reader.onload = function (e) {
+      setImage(e.target.result);
+    };
+    reader.readAsDataURL(file);
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -54,12 +74,11 @@ const ListingForm = (props) => {
       condition: false,
     });
 
-    // TODO: upload Image
-    const imageURI =
-      "https://merriam-webster.com/assets/mw/images/article/art-wap-article-main/surfing-dog-photo-is-funner-or-funnest-a-real-word-5670-6d512231d0a52079b0c9fbf474f9a6c9@1x.jpg";
+    const storage = getStorage();
+    const storageRef = ref(storage, `images/${uuidv4()}.jpg`);
+    await uploadString(storageRef, image, "data_url");
 
-    // TODO: get school
-    const school = "Stevens Institute of Technology";
+    let imageURI = await getDownloadURL(storageRef);
 
     // object
     const listingData = {
@@ -96,8 +115,11 @@ const ListingForm = (props) => {
         });
       }
     } else {
+      let idToken = await auth.currentUser.getIdToken();
+
       const { data } = await axios.post(endpoint, {
         listingData,
+        idToken,
       });
 
       if (setListing) {
@@ -138,6 +160,11 @@ const ListingForm = (props) => {
               fullWidth
               margin="normal"
               error={errors.title}
+              required={formTitle === "Create a New Listing"}
+            />
+            <SelectSchool
+              margin="normal"
+              setSchool={setSchool}
               required={formTitle === "Create a New Listing"}
             />
             <TextField
@@ -195,9 +222,7 @@ const ListingForm = (props) => {
               style={{ display: "none" }}
               id="imageUpload"
               type="file"
-              onChange={(e) => {
-                setImage({ file: e.target.files[0] });
-              }}
+              onChange={onImageChanged}
             />
             <label htmlFor="imageUpload">
               <Button
@@ -215,7 +240,7 @@ const ListingForm = (props) => {
                 </Typography>
               </Button>
               &nbsp;
-              {image.file && image.file.name ? image.file.name : ""}
+              {imageTitle ? imageTitle : ""}
             </label>
             <br />
             <br />

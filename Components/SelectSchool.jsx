@@ -4,14 +4,14 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import schoolObject from "../Utils/schools";
 
-function SelectSchool({ setSchool }) {
+function SelectSchool(props) {
   return (
     <Autocomplete
+      {...props}
       id="school-select"
-      sx={{ width: 500 }}
       options={schoolObject}
       autoHighlight
-      onChange={(e) => setSchool(e.target.innerText)}
+      onChange={(e) => props.setSchool(e.target.innerText)}
       getOptionLabel={(option) => option.institution}
       renderOption={(props, option) => (
         <Box
