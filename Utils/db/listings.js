@@ -23,6 +23,13 @@ const createListing = async (newListingData) => {
     id: listingDoc.id,
   });
 
+  //Update User listings array TODO: test this
+  let userDoc = await db.collection("users").doc(newListingData.posterID).get();
+  let userData = await userDoc.data();
+  userData.listings.push(listingDoc.id);
+  await userDoc.update(userData);
+
+
   // return new listing's data
   return (await listingDoc.get()).data();
 };

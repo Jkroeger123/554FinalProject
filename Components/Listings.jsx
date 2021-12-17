@@ -49,7 +49,11 @@ function Listings() {
           }}
         >
           <LocationOnIcon sx={{ fontSize: "30px" }} />
-          <UserProvider fallback={<SelectSchool setSchool={setSchool} />}>
+          <UserProvider
+            fallback={
+              <SelectSchool setSchool={setSchool} sx={{ width: "500px" }} />
+            }
+          >
             <UserSchool setSchool={setSchool} />
           </UserProvider>
         </div>

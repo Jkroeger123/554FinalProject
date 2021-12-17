@@ -15,7 +15,7 @@ function UserSchool({ setSchool }) {
       {userData.school ? (
         userData.school
       ) : (
-        <SelectSchool setSchool={setSchool} />
+        <SelectSchool setSchool={setSchool} sx={{ width: "500px" }} />
       )}
     </Typography>
   );

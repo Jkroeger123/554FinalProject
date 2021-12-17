@@ -2,7 +2,6 @@ import React from "react";
 import Card from "../Components/Cards/ListingCard";
 import { Grid, Typography, Divider, Button } from "@mui/material";
 import data from "../Utils/db/favoriteListings";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 function favorites() {
   return (
