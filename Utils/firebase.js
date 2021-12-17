@@ -1,6 +1,7 @@
 //USED FOR CLIENT SIDE
 import { initializeApp, getApp, getApps } from "@firebase/app";
 import {GoogleAuthProvider, getAuth, signInWithPopup} from '@firebase/auth';
+import axios from 'axios';
 
 const firebaseConfig = {
     apiKey: "AIzaSyCZ_0mTbKFw0jIxyePAdU9A2BkIAs52pzE",
@@ -10,19 +11,7 @@ const firebaseConfig = {
     messagingSenderId: "73038711698",
     appId: "1:73038711698:web:13a79dfd685bba04758f4b"
 };
-/*
-console.log(process.env.REACT_APP_FIREBASE_APIKEY);
 
-
-const firebaseConfig = {
-  apiKey: process.env.REACT_APP_FIREBASE_APIKEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTHDOMAIN,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECTID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGEBUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSASGESENDERID,
-  appId: process.env.REACT_APP_FIREBASE_APPID
-};
-*/
 if (!getApps().length) {
     const app = initializeApp(firebaseConfig);
  }else {
@@ -37,10 +26,18 @@ const signInWithGoogle = async () => {
   try {
     const res = await signInWithPopup(auth, googleProvider);
     const user = res.user;
-    return user;
+
+    //Check if user is in database : If not, add them.
+    let idToken = await auth.currentUser.getIdToken();
+
+    let newUser = await axios.post('/api/createUser', {
+      idToken,
+      user
+    })
+
+    return newUser;
   } catch (err) {
     console.error(err);
-    alert(err.message);
   }
 };
 
