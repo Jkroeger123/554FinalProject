@@ -23,6 +23,13 @@ const createListing = async (newListingData) => {
     id: listingDoc.id,
   });
 
+  //Update User listings array TODO: test this
+  let userDoc = await db.collection("users").doc(newListingData.posterID).get();
+  let userData = await userDoc.data();
+  userData.listings.push(listingDoc.id);
+  await userDoc.update(userData);
+
+
   // return new listing's data
   return (await listingDoc.get()).data();
 };
@@ -45,7 +52,12 @@ const getListingById = async (id) => {
   return listing.data();
 };
 
-const updateListing = async (id, updatedListingData) => {
+const updateListing = async (id, updatedListingData, uid) => {
+
+  if (!uid || typeof(uid) != 'string'){
+    throw new Error("Expected an argument of type 'string' for uid.");
+  }
+
   // error check id parameter
   if (!id || typeof id !== "string") {
     throw new Error("Expected an argument of type 'string' for listing id.");
@@ -84,6 +96,12 @@ const updateListing = async (id, updatedListingData) => {
 
   // get listing with id from listings collection
   const listing = await listings.doc(id);
+
+  const dat = (await listing.get()).data();
+
+  if(dat.posterID != uid){
+    throw new Error("Error: UID does not match the UID of the uploader.");
+  }
 
   // update listing
   await listing.update(updatedListingData);

@@ -72,7 +72,7 @@ const ListingComponent = ({ selectedListing }) => {
 
 const EditButton = ({ listing, setListing }) => {
   const { user } = useUser();
-  const [open, setOpen] = useState();
+  const [open, setOpen] = useState(false);
 
   if (listing.madeBy === user.displayName) {
     return (
