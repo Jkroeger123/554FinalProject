@@ -4,9 +4,7 @@ import SocketProvider from "./SocketContext";
 import MessageArea from "./MessageArea";
 
 const ChatComponent = ({ selectedChat }) => {
-  const { user, loading } = useUser();
-
-  if (loading) return <h1>Loading...</h1>;
+  const { user } = useUser();
 
   return (
     <SocketProvider id={user.uid}>

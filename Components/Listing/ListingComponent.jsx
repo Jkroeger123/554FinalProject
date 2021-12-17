@@ -3,11 +3,11 @@ import axios from "axios";
 import { useUser } from "../UserContext";
 import { Button, Grid, Modal, Typography } from "@mui/material";
 import ListingForm from "./ListingForm";
+import UserProvider from "../UserContext";
+import Contact from "../Chat/Contact";
 
 const ListingComponent = ({ selectedListing }) => {
   const [listing, setListing] = useState({});
-  const { user, loading } = useUser();
-  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     const fetch = async () => {
@@ -20,7 +20,7 @@ const ListingComponent = ({ selectedListing }) => {
     fetch();
   }, []);
 
-  if (!listing.id || loading) return <h1>Loading...</h1>;
+  if (!listing.id) return <h1>Loading...</h1>;
 
   return (
     <>
@@ -53,41 +53,59 @@ const ListingComponent = ({ selectedListing }) => {
           <p>{listing.description}</p>
           <br />
           <div style={{ textAlign: "center" }}>
-            {listing.madeBy === user.displayName ? (
-              <>
-                <Button
-                  style={{ backgroundColor: "#A92C68" }}
-                  variant="contained"
-                  onClick={() => {
-                    setOpen(true);
-                  }}
-                >
-                  <Typography>EDIT POST</Typography>
-                </Button>
-                <Modal
-                  open={open}
-                  onClose={() => {
-                    setOpen(false);
-                  }}
-                >
-                  <div>
-                    <ListingForm
-                      formTitle="Edit Listing"
-                      setListing={setListing}
-                      endpoint={`/api/listing/update/${listing.id}`}
-                      setOpen={setOpen}
-                    />
-                  </div>
-                </Modal>
-              </>
-            ) : (
-              <></>
-            )}
+            <UserProvider fallback={<></>}>
+              <EditButton listing={listing} setListing={setListing} />
+            </UserProvider>
           </div>
         </Grid>
+        <UserProvider
+          fallback={
+            <Typography>Sign In to Contact {listing.madeBy}</Typography>
+          }
+        >
+          <Contact listing={listing} />
+        </UserProvider>
       </Grid>
     </>
   );
+};
+
+const EditButton = ({ listing, setListing }) => {
+  const { user } = useUser();
+  const [open, setOpen] = useState();
+
+  if (listing.madeBy === user.displayName) {
+    return (
+      <>
+        <Button
+          style={{ backgroundColor: "#A92C68" }}
+          variant="contained"
+          onClick={() => {
+            setOpen(true);
+          }}
+        >
+          <Typography>EDIT POST</Typography>
+        </Button>
+        <Modal
+          open={open}
+          onClose={() => {
+            setOpen(false);
+          }}
+        >
+          <div>
+            <ListingForm
+              formTitle="Edit Listing"
+              setListing={setListing}
+              endpoint={`/api/listing/update/${listing.id}`}
+              setOpen={setOpen}
+            />
+          </div>
+        </Modal>
+      </>
+    );
+  } else {
+    return <></>;
+  }
 };
 
 export default ListingComponent;
