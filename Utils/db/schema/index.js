@@ -69,3 +69,37 @@ export const validateListing = (listing, required) => {
     return validate.errors;
   }
 };
+
+const updateUserDataSchema = {
+  type: "object",
+  additionalProperties: false,
+  properties: {
+    displayName: {
+      type: "string",
+      nullable: false,
+      errorMessage: { type: "displayName must be String" },
+    },
+    photoURL: {
+      type: "string",
+      nullable: false,
+      errorMessage: { type: "photoURL must be String" },
+    },
+    school: {
+      type: "string",
+      nullable: false,
+      errorMessage: { type: "school must be String" },
+    },
+  },
+};
+
+export const validateUpdateUser = (userData) => {
+  const schema = { ...updateUserDataSchema };
+
+  const validate = ajv.compile(schema);
+
+  const valid = validate(userData);
+
+  if (!valid) {
+    return validate.errors;
+  }
+};
