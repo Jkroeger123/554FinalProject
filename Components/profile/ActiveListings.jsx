@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../Cards/UserListingCard";
-import data from "../../Utils/db/usersListings";
-import { Grid, Typography, Divider, Button } from "@mui/material";
+import { Grid } from "@mui/material";
+import axios from "axios";
+import { useUser } from "../UserContext";
 
 function ActiveListings() {
+  const [data, setData] = useState([]);
+  const { user } = useUser();
+
+  useEffect(() => {
+    const fetch = async () => {
+      let { data } = await axios.post("/api/getActiveListings", {
+        uid: user.uid,
+      });
+      setData(data);
+    };
+    fetch();
+  }, []);
+
   return (
     <div>
       <Grid

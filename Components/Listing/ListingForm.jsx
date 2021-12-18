@@ -129,6 +129,8 @@ const ListingForm = (props) => {
       if (setOpen) {
         setOpen(false);
       }
+
+      if (props.onSubmit) props.onSubmit(data.id);
     }
   };
 

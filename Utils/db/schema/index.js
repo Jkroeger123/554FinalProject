@@ -43,6 +43,11 @@ const listingSchema = {
       nullable: false,
       errorMessage: { type: "condition must be String" },
     },
+    active: {
+      type: "boolean",
+      nullable: false,
+      errorMessage: { type: "condition must be boolean" },
+    },
   },
 };
 
@@ -58,6 +63,7 @@ export const validateListing = (listing, required) => {
       "madeBy",
       "school",
       "condition",
+      "active"
     ];
   }
 

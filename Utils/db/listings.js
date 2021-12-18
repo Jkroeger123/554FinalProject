@@ -4,7 +4,7 @@ import { validateListing } from "./schema";
 // get listings collection
 const listings = db.collection("listings");
 
-const createListing = async (newListingData) => {
+const createListing = async (newListingData, uid) => {
   // validate new listing fields
   const validationError = validateListing(newListingData, true);
 
@@ -21,11 +21,12 @@ const createListing = async (newListingData) => {
     uploadDate: new Date().toISOString().split("T")[0],
     active: true,
     id: listingDoc.id,
+    posterID: uid
   });
 
   //Update User listings array TODO: test this
-  let userDoc = await db.collection("users").doc(newListingData.posterID).get();
-  let userData = await userDoc.data();
+  let userDoc = await db.collection("users").doc(uid);
+  let userData = (await userDoc.get()).data();
   userData.listings.push(listingDoc.id);
   await userDoc.update(userData);
 
@@ -54,6 +55,8 @@ const getListingById = async (id) => {
 
 const updateListing = async (id, updatedListingData, uid) => {
 
+ 
+
   if (!uid || typeof(uid) != 'string'){
     throw new Error("Expected an argument of type 'string' for uid.");
   }
@@ -66,7 +69,7 @@ const updateListing = async (id, updatedListingData, uid) => {
   // check that non-empty object was passed
   if (
     !updatedListingData ||
-    updatedListingData.constructor.name !== "Object" ||
+    typeof(updatedListingData) != "object" ||
     !Object.keys(updatedListingData).length
   ) {
     throw new Error(
@@ -76,7 +79,7 @@ const updateListing = async (id, updatedListingData, uid) => {
 
   // remove empty fields
   Object.keys(updatedListingData).forEach(
-    (k) => !updatedListingData[k] && delete updatedListingData[k]
+    (k) => updatedListingData[k] == undefined && delete updatedListingData[k]
   );
 
   // check if any fields remain to update
@@ -110,9 +113,9 @@ const updateListing = async (id, updatedListingData, uid) => {
   return (await listing.get()).data();
 };
 
-const getListingsByUser = async (username, active) => {
+const getListingsByUser = async (uid, active) => {
   // error check username parameter
-  if (!username || typeof username !== "string" || !username.trim()) {
+  if (!uid || typeof uid !== "string" || !uid.trim()) {
     throw new Error(
       "Expected an argument of type 'string' for username parameter."
     );
@@ -120,7 +123,7 @@ const getListingsByUser = async (username, active) => {
 
   // get all listings made by user
   const userListings = await listings
-    .where("madeBy", "==", username)
+    .where("posterID", "==", uid)
     .where("active", "==", active)
     .get();
 
@@ -138,12 +141,12 @@ const getListingsByUser = async (username, active) => {
   return res;
 };
 
-const getActiveListingsByUser = async (username) => {
-  return await getListingsByUser(username, true);
+const getActiveListingsByUser = async (uid) => {
+  return await getListingsByUser(uid, true);
 };
 
-const getInactiveListingsByUser = async (username) => {
-  return await getListingsByUser(username, false);
+const getInactiveListingsByUser = async (uid) => {
+  return await getListingsByUser(uid, false);
 };
 
 const getListingsBySchool = async (school) => {
@@ -192,8 +195,13 @@ const deleteListing = async (id) => {
 };
 
 // mark listing as inactive
-const removeListing = async (id) => {
-  return await updateListing(id, { active: false });
+const removeListing = async (id, uid) => {
+  return await updateListing(id, { active: false }, uid);
+};
+
+// mark listing as inactive
+const addListing = async (id, uid) => {
+  return await updateListing(id, { active: true }, uid);
 };
 
 export default {
@@ -205,4 +213,5 @@ export default {
   updateListing,
   deleteListing,
   removeListing,
+  addListing
 };
