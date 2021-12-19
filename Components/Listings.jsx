@@ -8,7 +8,7 @@ import UserProvider from "./UserContext";
 import UserSchool from "./UserSchool";
 
 function Listings() {
-  const [school, setSchool] = useState("Stevens Institute of Technology");
+  const [school, setSchool] = useState("");
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
