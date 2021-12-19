@@ -91,6 +91,7 @@ const EditButton = ({ listing, setListing }) => {
           onClose={() => {
             setOpen(false);
           }}
+          sx={{overflow: 'scroll'}}
         >
           <div>
             <ListingForm
