@@ -11,7 +11,7 @@ function UserSchool({ setSchool }) {
   }, [userData]);
 
   return (
-    <Typography variant="h2" sx={{ fontSize: "30px" }}>
+    <Typography variant="h1" sx={{ fontSize: "30px" }}>
       {userData.school ? (
         userData.school
       ) : (

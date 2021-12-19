@@ -145,7 +145,7 @@ const ListingForm = (props) => {
       }
     >
       <CardContent>
-        <Typography variant="h5" align="center">
+        <Typography variant="h1" align="center" sx={{ fontSize: '40px'}}>
           {formTitle}
         </Typography>
 
@@ -159,6 +159,8 @@ const ListingForm = (props) => {
                 }
               }}
               label="Title"
+              aria-label="Title"
+              id="Title"
               fullWidth
               margin="normal"
               error={errors.title}
@@ -177,6 +179,7 @@ const ListingForm = (props) => {
                 }
               }}
               label="Price"
+              id="Price"
               fullWidth
               type="number"
               margin="normal"
@@ -196,6 +199,7 @@ const ListingForm = (props) => {
                 }
               }}
               label="Condition"
+              id="Condition"
               fullWidth
               margin="normal"
               error={errors.condition}
@@ -212,6 +216,7 @@ const ListingForm = (props) => {
                 }
               }}
               label="Description"
+              id="Description"
               multiline
               rows={5}
               fullWidth
@@ -230,7 +235,7 @@ const ListingForm = (props) => {
               <Button
                 variant="contained"
                 style={{
-                  backgroundColor: "#C5C0C0",
+                  backgroundColor: "#2A265A",
                   width: "50%",
                 }}
                 component="span"
