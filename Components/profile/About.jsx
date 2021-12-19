@@ -1,9 +1,10 @@
 import React from "react";
-import data from "../../Utils/db/users";
 import { Grid, Typography } from "@mui/material";
+import { useUser } from "../UserContext";
 
 function About() {
-  console.log(data);
+  const { userData } = useUser();
+
   return (
     <div>
       <Grid
@@ -18,22 +19,12 @@ function About() {
       >
         <Grid item xs={12} sm={4} md={3}>
           <Typography component={"span"} variant="h5">
-            Display Name: {data.displayName}
+            Display Name: {userData.displayName}
           </Typography>
         </Grid>
         <Grid item xs={12} sm={4} md={3}>
           <Typography component={"span"} variant="h5">
-            School: {data.school}
-          </Typography>
-        </Grid>
-        <Grid item xs={12} sm={4} md={3}>
-          <Typography component={"span"} variant="h5">
-            City: {data.city}
-          </Typography>
-        </Grid>
-        <Grid item xs={12} sm={4} md={3}>
-          <Typography component={"span"} variant="h5">
-            State: {data.state}
+            School: {userData.school}
           </Typography>
         </Grid>
       </Grid>
