@@ -74,11 +74,15 @@ const ListingForm = (props) => {
       condition: false,
     });
 
-    const storage = getStorage();
-    const storageRef = ref(storage, `images/${uuidv4()}.jpg`);
-    await uploadString(storageRef, image, "data_url");
+    let imageURI;
 
-    let imageURI = await getDownloadURL(storageRef);
+    if (imageTitle) {
+      const storage = getStorage();
+      const storageRef = ref(storage, `images/${uuidv4()}.jpg`);
+      await uploadString(storageRef, image, "data_url");
+
+      imageURI = await getDownloadURL(storageRef);
+    }
 
     // object
     const listingData = {
