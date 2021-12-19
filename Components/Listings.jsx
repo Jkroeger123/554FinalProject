@@ -18,8 +18,7 @@ function Listings() {
       let { data } = await axios.post("/api/getListingsBySchool", {
         school: school,
       });
-
-      setListings(data);
+      setListings(data.filter((e) => e.active));
     };
 
     fetch();
