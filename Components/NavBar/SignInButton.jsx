@@ -1,6 +1,6 @@
 import React from "react";
 import { signInWithGoogle } from "../../Utils/firebase";
-import GoogleButton from "react-google-button";
+import { Button } from "@mui/material";
 
 function SignInButton() {
   const OnGooglePressed = async () => {
@@ -13,7 +13,12 @@ function SignInButton() {
 
   return (
     <div style={{ marginTop: "auto", marginBottom: "auto" }}>
-      <GoogleButton onClick={OnGooglePressed}>Sign In With Google</GoogleButton>
+      <Button
+        onClick={OnGooglePressed}
+        sx={{ color: "white", fontSize: "20px" }}
+      >
+        Sign In With Google
+      </Button>
     </div>
   );
 }
