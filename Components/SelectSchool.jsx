@@ -5,9 +5,11 @@ import Autocomplete from "@mui/material/Autocomplete";
 import schoolObject from "../Utils/schools";
 
 function SelectSchool(props) {
+  const { setSchool, ...otherProps } = props;
+
   return (
     <Autocomplete
-      {...props}
+      {...otherProps}
       id="school-select"
       options={schoolObject}
       autoHighlight
