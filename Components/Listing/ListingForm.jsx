@@ -49,6 +49,7 @@ const ListingForm = (props) => {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState({ file: null });
   const [imageTitle, setImageTitle] = useState();
+  const [imageLoading, setImageLoading] = useState(false);
   const [errors, setErrors] = useState({
     title: false,
     price: false,
@@ -57,11 +58,13 @@ const ListingForm = (props) => {
   });
 
   const onImageChanged = (e) => {
+    setImageLoading(true);
     let file = e.target.files[0];
     setImageTitle(file.name);
     let reader = new FileReader();
     reader.onload = function (e) {
       setImage(e.target.result);
+      setImageLoading(false);
     };
     reader.readAsDataURL(file);
   };
@@ -150,7 +153,7 @@ const ListingForm = (props) => {
       }
     >
       <CardContent>
-        <Typography variant="h1" align="center" sx={{ fontSize: '40px'}}>
+        <Typography variant="h1" align="center" sx={{ fontSize: "40px" }}>
           {formTitle}
         </Typography>
 
@@ -263,6 +266,7 @@ const ListingForm = (props) => {
                 type="submit"
                 variant="contained"
                 onClick={onSubmit}
+                disabled={imageLoading}
               >
                 <Typography>Submit</Typography>
               </Button>

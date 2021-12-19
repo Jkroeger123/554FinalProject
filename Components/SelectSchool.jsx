@@ -13,9 +13,13 @@ function SelectSchool(props) {
       id="school-select"
       options={schoolObject}
       autoHighlight
-      onChange={(e) => props.setSchool(e.target.innerText)}
+      onChange={(e) => {
+        if (e.target.innerText) props.setSchool(e.target.innerText);
+      }}
       getOptionLabel={(option) => option.institution}
-      defaultValue={{ institution: props.initial === undefined ? "" : props.initial }}
+      defaultValue={{
+        institution: props.initial === undefined ? "" : props.initial,
+      }}
       renderOption={(props, option) => (
         <Box
           component="li"
