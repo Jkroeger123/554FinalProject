@@ -15,10 +15,6 @@ function MediaCard({ data }) {
 
   const [idToken, setIdToken] = useState(undefined);
   const [isFavorite, setIsFavorite] = useState(undefined);
-  //full heart needs to add listing to favorites db
-  //unhearting listing should take it out of favorites db
-  //if listing is inactive, don't display it (or something)
-  //also, only allow favorites if user is logged in
   
   useEffect(() => {
     const fetch = async () => {
@@ -86,11 +82,7 @@ function MediaCard({ data }) {
       </div>}
 
       <CardActionArea onClick={() => {
-          if (data.active) {
-            router.push(`/listing/${data.id}`);
-          } else {
-            alert("Sorry, this listing is inactive");
-          }
+          router.push(`/listing/${data.id}`);
         }}>
         <CardMedia component="img" image={data.image} alt={data.title} />
         <CardContent>
