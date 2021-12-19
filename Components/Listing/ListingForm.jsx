@@ -89,6 +89,7 @@ const ListingForm = (props) => {
       madeBy: user.displayName,
       school,
       condition: condition.trim(),
+      active: true,
     };
 
     // remove null values from new listing data
