@@ -63,7 +63,7 @@ const ListingComponent = ({ selectedListing }) => {
             <Typography>Sign In to Contact {listing.madeBy}</Typography>
           }
         >
-          <Contact listing={listing} />
+          {listing.active ? <Contact listing={listing}/> : <h3>This listing is inactive</h3>}
         </UserProvider>
       </Grid>
     </>
