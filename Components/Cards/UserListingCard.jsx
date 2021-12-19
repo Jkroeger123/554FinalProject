@@ -8,8 +8,10 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import axios from "axios";
 import { auth } from "../../Utils/firebase";
+import {useRouter} from 'next/router';
 
 function MediaCard({ data }) {
+  const router = useRouter();
   const [isActive, setIsActive] = useState(!data.active);
   //needs to change active value to !active when clicked
 
@@ -42,7 +44,9 @@ function MediaCard({ data }) {
         {isActive ? <AddCircleIcon /> : <RemoveCircleIcon />}
       </div>
 
-      <CardActionArea>
+      <CardActionArea  onClick={() => {
+          router.push(`/listing/${data.id}`);
+        }}>
         <CardMedia component="img" image={data.image} alt={data.title} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
@@ -52,7 +56,7 @@ function MediaCard({ data }) {
             {data.title}
           </Typography>
           <Typography variant="body3" sx={{ color: "#A92C68" }}>
-            {data.city}, {data.state}
+          {data.school}
           </Typography>
         </CardContent>
       </CardActionArea>

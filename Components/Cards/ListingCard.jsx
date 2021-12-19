@@ -93,7 +93,7 @@ function MediaCard({ data }) {
             {data.title}
           </Typography>
           <Typography variant="body3" sx={{ color: "#A92C68" }}>
-            {data.city}, {data.state}
+            {data.school}
           </Typography>
         </CardContent>
       </CardActionArea>
