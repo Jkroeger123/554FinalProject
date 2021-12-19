@@ -27,23 +27,23 @@ export default async (req, res) => {
             } catch {
                 return res.status(404);
             }
-
+            
             // if so, update and return the account
-            const oldFaves = userDoc.favoriteListings;
+            const { favoriteListings } = userDoc.data();
             if (favorite) {
                 // add to favorites, if not already favorited
-                if (!oldFaves.includes(listingId)){
+                if (!favoriteListings.includes(listingId)){
                     let newFavorites = {
-                        favoriteListings: [...oldFaves, listingId]
+                        favoriteListings: [...favoriteListings, listingId]
                     };
                     
                     await db.collection('users').doc(uid).update(newFavorites);
                 }
             } else {
                 // remove from favorites, if there
-                if (oldFaves.includes(listingId)){
+                if (favoriteListings.includes(listingId)){
                     let newFavorites = {
-                        favoriteListings: oldFaves.filter((e) => e !== listingId)
+                        favoriteListings: favoriteListings.filter((e) => e !== listingId)
                     };
                     
                     await db.collection('users').doc(uid).update(newFavorites);

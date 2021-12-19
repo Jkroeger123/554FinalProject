@@ -17,14 +17,15 @@ export default async (req, res) => {
             // iterate through favorites, get each one and return array of them
             let toReturn = [];
 
-            for (const f of userDoc.favoriteListings) {
+            const { favoriteListings } = userDoc.data();
+            for (const f of favoriteListings) {
                 try {
                     const l = await listings.getListingById(f);
                     toReturn.push(l);
                 } catch {
                     // listing doesn't exist, shouldn't happen
                     // let's just delete it from favorites
-                    await db.collection('users').doc(uid).update({favoriteListings: userDoc.favoriteListings.filter((e) => e !== f)});
+                    await db.collection('users').doc(uid).update({favoriteListings: favoriteListings.filter((e) => e !== f)});
                 }
             }
 
