@@ -103,6 +103,7 @@ function MessageArea({ selectedChat }) {
             margin: "auto",
             marginBottom: "16px",
           }}
+          alt={`${name}`}
         />
         <Typography
           align="center"
@@ -131,6 +132,8 @@ function MessageArea({ selectedChat }) {
           <TextField
             aria-label="Message Form"
             placeholder="Enter your message"
+            label="Enter your message"
+            id="Enter your message"
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             sx={{ width: "30vw" }}
