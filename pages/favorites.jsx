@@ -1,11 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Card from "../Components/Cards/ListingCard";
 import { Grid, Typography, Divider, Button } from "@mui/material";
 import data from "../Utils/db/favoriteListings";
+import axios from "axios";
+import { auth } from "../Utils/firebase";
+import UserProvider from "../Components/UserContext";
+
+
 
 function favorites() {
   return (
-    <div>
+    <UserProvider protectedRoute>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <Typography
           variant="h4"
@@ -39,7 +44,7 @@ function favorites() {
           </Grid>
         ))}
       </Grid>
-    </div>
+    </UserProvider>
   );
 }
 
