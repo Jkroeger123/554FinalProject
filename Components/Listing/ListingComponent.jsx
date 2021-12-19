@@ -78,7 +78,7 @@ const EditButton = ({ listing, setListing }) => {
     return (
       <>
         <Button
-          style={{ backgroundColor: "#A92C68" }}
+          style={{ backgroundColor: "#A92C68", marginBottom:"20px" }}
           variant="contained"
           onClick={() => {
             setOpen(true);
