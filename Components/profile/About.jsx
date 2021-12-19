@@ -5,7 +5,6 @@ import { useUser } from "../UserContext";
 function About() {
   const { userData } = useUser();
 
-  console.log(userData);
   return (
     <div>
       <Grid
