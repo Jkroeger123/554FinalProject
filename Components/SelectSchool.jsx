@@ -15,6 +15,7 @@ function SelectSchool(props) {
       autoHighlight
       onChange={(e) => props.setSchool(e.target.innerText)}
       getOptionLabel={(option) => option.institution}
+      defaultValue={{ institution: props.initial === undefined ? "" : props.initial }}
       renderOption={(props, option) => (
         <Box
           component="li"
