@@ -28,7 +28,7 @@ function Layout() {
             </div>
             
             <div style={{background:"#2A265A", paddingTop: "1px"}}>
-                <Typography variant="h4" sx={{color: "#FFFFFF", marginTop: "20px", marginLeft: "60px"}}>
+                <Typography variant="h2" sx={{color: "#FFFFFF", fontSize: "35px", marginTop: "20px", marginLeft: "60px"}}>
                     How does it work?
                 </Typography>
                 <div style={{marginTop: "20px", marginLeft: "60px", marginRight: "60px"}}>
@@ -37,7 +37,7 @@ function Layout() {
                         supplies, art, anything really! Anyone that also goes to their school can view these 
                         listings.
                     </Typography>
-                    <Typography variant="h4" sx={{color: "#FFFFFF", fontSize: "30px", marginTop: "30px", marginBottom: "15px"}}>
+                    <Typography variant="h3" sx={{color: "#FFFFFF", fontSize: "30px", marginTop: "30px", marginBottom: "15px"}}>
                         Our site offers two different experiences:
                     </Typography>
                     <div style={{ display: "flex", justifyContent: "space-between", marginLeft: "30px"}}>
@@ -64,7 +64,7 @@ function Layout() {
             </div>
 
             <div>
-                <Typography variant="h4" sx={{marginTop: "30px", marginLeft: "60px", marginBottom: "30px"}}>
+                <Typography variant="h2" sx={{fontSize: "35px", marginTop: "30px", marginLeft: "60px", marginBottom: "30px"}}>
                     What do you do when you want to actually purchase something that was listed?
                 </Typography>
                 <div style={{marginTop: "20px", marginLeft: "60px", marginRight: "60px"}}>
