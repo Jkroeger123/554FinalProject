@@ -14,7 +14,16 @@ function MyApp({ Component, pageProps }) {
       <Component {...pageProps} />
     </div>
   </>
+
   );
 }
 
 export default MyApp
+/*  <Script 
+        src='https://service.force.com/embeddedservice/5.0/esw.min.js'
+        strategy='afterInteractive'
+        />
+      <Script
+        src='https://brendanoneuraflashtest-developer-edition.na139.force.com/digitalassistant/resource/chatInit'
+        strategy='afterInteractive'
+      />*/
