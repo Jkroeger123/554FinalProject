@@ -10,7 +10,7 @@ function Layout() {
         <div>
             <div style={{paddingBottom: "30px"}}>
                 <Typography variant='h1' sx={{fontSize: "50px", marginTop: "30px", marginLeft: "60px"}}>
-                    Welcome to College Connect
+                    Welcome to U-Connect
                 </Typography>
                 <div style={{marginTop: "20px", marginLeft: "60px", marginRight: "60px"}}>
                     <Typography variant="p" sx={{fontSize: "20px"}}>
