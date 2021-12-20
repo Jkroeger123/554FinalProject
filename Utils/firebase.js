@@ -29,7 +29,8 @@ const signInWithGoogle = async () => {
 
     //Check if user is in database : If not, add them.
     let idToken = await auth.currentUser.getIdToken();
-
+    window.localStorage.setItem('token', idToken);
+    window.localStorage.setItem('name', user.displayName);
     let newUser = await axios.post('/api/createUser', {
       idToken,
       user
@@ -43,7 +44,11 @@ const signInWithGoogle = async () => {
 
 const logout = () => {
     auth.signOut();
+    window.localStorage.removeItem('token');
+    window.localStorage.removeItem('name');
 };
+
+
 
 export {
     auth,
