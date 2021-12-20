@@ -43,6 +43,11 @@ const listingSchema = {
       nullable: false,
       errorMessage: { type: "condition must be String" },
     },
+    active: {
+      type: "boolean",
+      nullable: false,
+      errorMessage: { type: "condition must be boolean" },
+    },
   },
 };
 
@@ -58,12 +63,47 @@ export const validateListing = (listing, required) => {
       "madeBy",
       "school",
       "condition",
+      "active"
     ];
   }
 
   const validate = ajv.compile(schema);
 
   const valid = validate(listing);
+
+  if (!valid) {
+    return validate.errors;
+  }
+};
+
+const updateUserDataSchema = {
+  type: "object",
+  additionalProperties: false,
+  properties: {
+    displayName: {
+      type: "string",
+      nullable: false,
+      errorMessage: { type: "displayName must be String" },
+    },
+    photoURL: {
+      type: "string",
+      nullable: false,
+      errorMessage: { type: "photoURL must be String" },
+    },
+    school: {
+      type: "string",
+      nullable: false,
+      errorMessage: { type: "school must be String" },
+    },
+  },
+};
+
+export const validateUpdateUser = (userData) => {
+  const schema = { ...updateUserDataSchema };
+
+  const validate = ajv.compile(schema);
+
+  const valid = validate(userData);
 
   if (!valid) {
     return validate.errors;

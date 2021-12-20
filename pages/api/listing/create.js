@@ -1,8 +1,9 @@
 import listings from "../../../Utils/db/listings";
 import { validateListing } from "../../../Utils/db/schema";
+import {auth} from '../../../Utils/db';
 
 export default async (req, res) => {
-  const { listingData } = req.body;
+  const { listingData, idToken } = req.body;
 
   try {
     const validationError = validateListing(listingData);
@@ -16,7 +17,8 @@ export default async (req, res) => {
   }
 
   try {
-    const newListing = await listings.createListing(listingData);
+    let decodedToken = await auth.verifyIdToken(idToken);
+    const newListing = await listings.createListing(listingData, decodedToken.uid);
     res.status(200).json(newListing);
   } catch (e) {
     console.log(e);

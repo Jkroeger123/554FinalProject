@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
@@ -7,18 +7,66 @@ import Typography from "@mui/material/Typography";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useRouter } from "next/router";
+import axios from "axios";
+import { auth } from "../../Utils/firebase";
 
 function MediaCard({ data }) {
   const router = useRouter();
 
-  const [isFavorite, setIsFavorite] = useState(false);
-  //full heart needs to add listing to favorites db
-  //unhearting listing should take it out of favorites db
-  //if listing becomes unactive, the listing should be taken out of favorites
+  const [idToken, setIdToken] = useState(undefined);
+  const [isFavorite, setIsFavorite] = useState(undefined);
+  
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        let idToken = await auth.currentUser.getIdToken();
+        setIdToken(idToken);
+      } catch {
+        setIdToken(false);
+      }
+    };
+    fetch();
+  });
+
+  useEffect(() => {
+    const fetch = async () => {
+      if (idToken) {
+        let resp = await axios.post("/api/user", {
+          idToken,
+          userID: auth.currentUser.uid,
+        });
+        if (resp.data.favoriteListings.includes(data.id)) {
+          setIsFavorite(true)
+        } else {
+          setIsFavorite(false);
+        }
+      }  
+    };
+
+    fetch();
+  }, [idToken]);
+  
+
+  const onFavoritePressed = async () => {
+    setIsFavorite((prev) => !prev);
+
+    await axios.post(`/api/setFavorite`, {
+      listingId: data.id,
+      idToken,
+      favorite: !isFavorite,
+    });
+  };
+  
+  if (idToken === undefined) {
+    return <h1>Loading...</h1>;
+  } else if (idToken && isFavorite === undefined) {
+    return <h1>Loading...</h1>;
+  }
+
   return (
     <Card sx={{ maxWidth: 200, position: "relative" }}>
-      <div
-        onClick={() => setIsFavorite((f) => !f)}
+      {isFavorite === undefined ? undefined : <div
+        onClick={onFavoritePressed}
         style={{
           position: "absolute",
           color: "#A92C68",
@@ -31,9 +79,11 @@ function MediaCard({ data }) {
         }}
       >
         {isFavorite ? <FavoriteIcon /> : <FavoriteBorderIcon />}
-      </div>
+      </div>}
 
-      <CardActionArea onClick={() => router.push(`/listing/${data.id}`)}>
+      <CardActionArea onClick={() => {
+          router.push(`/listing/${data.id}`);
+        }}>
         <CardMedia component="img" image={data.image} alt={data.title} />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
@@ -43,7 +93,7 @@ function MediaCard({ data }) {
             {data.title}
           </Typography>
           <Typography variant="body3" sx={{ color: "#A92C68" }}>
-            {data.city}, {data.state}
+            {data.school}
           </Typography>
         </CardContent>
       </CardActionArea>

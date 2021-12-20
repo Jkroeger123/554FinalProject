@@ -49,6 +49,7 @@ const ListingForm = (props) => {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState({ file: null });
   const [imageTitle, setImageTitle] = useState();
+  const [imageLoading, setImageLoading] = useState(false);
   const [errors, setErrors] = useState({
     title: false,
     price: false,
@@ -57,11 +58,13 @@ const ListingForm = (props) => {
   });
 
   const onImageChanged = (e) => {
+    setImageLoading(true);
     let file = e.target.files[0];
     setImageTitle(file.name);
     let reader = new FileReader();
     reader.onload = function (e) {
       setImage(e.target.result);
+      setImageLoading(false);
     };
     reader.readAsDataURL(file);
   };
@@ -74,11 +77,15 @@ const ListingForm = (props) => {
       condition: false,
     });
 
-    const storage = getStorage();
-    const storageRef = ref(storage, `images/${uuidv4()}.jpg`);
-    await uploadString(storageRef, image, "data_url");
+    let imageURI;
 
-    let imageURI = await getDownloadURL(storageRef);
+    if (imageTitle) {
+      const storage = getStorage();
+      const storageRef = ref(storage, `images/${uuidv4()}.jpg`);
+      await uploadString(storageRef, image, "data_url");
+
+      imageURI = await getDownloadURL(storageRef);
+    }
 
     // object
     const listingData = {
@@ -89,6 +96,7 @@ const ListingForm = (props) => {
       madeBy: user.displayName,
       school,
       condition: condition.trim(),
+      active: true,
     };
 
     // remove null values from new listing data
@@ -129,6 +137,8 @@ const ListingForm = (props) => {
       if (setOpen) {
         setOpen(false);
       }
+
+      if (props.onSubmit) props.onSubmit(data.id);
     }
   };
 
@@ -143,7 +153,7 @@ const ListingForm = (props) => {
       }
     >
       <CardContent>
-        <Typography variant="h5" align="center">
+        <Typography variant="h1" align="center" sx={{ fontSize: "40px" }}>
           {formTitle}
         </Typography>
 
@@ -157,6 +167,8 @@ const ListingForm = (props) => {
                 }
               }}
               label="Title"
+              aria-label="Title"
+              id="Title"
               fullWidth
               margin="normal"
               error={errors.title}
@@ -175,6 +187,7 @@ const ListingForm = (props) => {
                 }
               }}
               label="Price"
+              id="Price"
               fullWidth
               type="number"
               margin="normal"
@@ -194,6 +207,7 @@ const ListingForm = (props) => {
                 }
               }}
               label="Condition"
+              id="Condition"
               fullWidth
               margin="normal"
               error={errors.condition}
@@ -210,6 +224,7 @@ const ListingForm = (props) => {
                 }
               }}
               label="Description"
+              id="Description"
               multiline
               rows={5}
               fullWidth
@@ -228,7 +243,7 @@ const ListingForm = (props) => {
               <Button
                 variant="contained"
                 style={{
-                  backgroundColor: "#C5C0C0",
+                  backgroundColor: "#2A265A",
                   width: "50%",
                 }}
                 component="span"
@@ -251,6 +266,7 @@ const ListingForm = (props) => {
                 type="submit"
                 variant="contained"
                 onClick={onSubmit}
+                disabled={imageLoading}
               >
                 <Typography>Submit</Typography>
               </Button>

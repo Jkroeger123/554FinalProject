@@ -63,7 +63,7 @@ const ListingComponent = ({ selectedListing }) => {
             <Typography>Sign In to Contact {listing.madeBy}</Typography>
           }
         >
-          <Contact listing={listing} />
+          {listing.active ? <Contact listing={listing}/> : <h3>This listing is inactive</h3>}
         </UserProvider>
       </Grid>
     </>
@@ -78,7 +78,7 @@ const EditButton = ({ listing, setListing }) => {
     return (
       <>
         <Button
-          style={{ backgroundColor: "#A92C68" }}
+          style={{ backgroundColor: "#A92C68", marginBottom:"20px" }}
           variant="contained"
           onClick={() => {
             setOpen(true);
@@ -91,6 +91,7 @@ const EditButton = ({ listing, setListing }) => {
           onClose={() => {
             setOpen(false);
           }}
+          sx={{overflow: 'scroll'}}
         >
           <div>
             <ListingForm

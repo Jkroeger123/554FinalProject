@@ -20,14 +20,14 @@ function Message({ message, self }) {
   const messageStyle = {
     borderRadius: "20px 20px 20px 0px",
     padding: "16px",
-    backgroundColor: "#B4B4B4",
+    backgroundColor: "#949494",
     maxWidth: "20vw",
   };
 
   const selfMessageStyle = {
     borderRadius: "20px 20px 0px 20px",
     padding: "16px",
-    backgroundColor: "#B4B4B4",
+    backgroundColor: "#949494",
     maxWidth: "40vw",
   };
 

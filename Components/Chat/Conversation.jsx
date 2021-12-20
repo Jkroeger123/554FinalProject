@@ -22,16 +22,17 @@ function Conversation({ conversation }) {
         <Avatar
           src={conversation.photoURL}
           style={{ width: "80px", height: "80px" }}
+          alt={`${conversation.displayName}`}
         />
         <Stack direction="column">
-          <Typography variant="h2" style={{ fontSize: "30px" }}>
+          <Typography variant="h1" style={{ fontSize: "30px" }}>
             {conversation.displayName}
           </Typography>
           <Typography
             variant="p"
             sx={{
               width: "300px",
-              color: "#9B9B9B",
+              color: "#767676",
               whiteSpace: "nowrap",
               overflow: "hidden",
               textOverflow: "ellipsis",

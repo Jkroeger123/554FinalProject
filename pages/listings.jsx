@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
-import Card from "./Cards/ListingCard";
+import Card from "../Components/Cards/ListingCard";
 import { Grid, Typography, Divider, Button } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import axios from "axios";
-import SelectSchool from "./SelectSchool";
-import UserProvider from "./UserContext";
-import UserSchool from "./UserSchool";
+import SelectSchool from "../Components/SelectSchool";
+import UserProvider from "../Components/UserContext";
+import UserSchool from "../Components/UserSchool";
 
 function Listings() {
-  const [school, setSchool] = useState("Stevens Institute of Technology");
+  const [school, setSchool] = useState("");
   const [listings, setListings] = useState([]);
 
   useEffect(() => {
@@ -18,8 +18,7 @@ function Listings() {
       let { data } = await axios.post("/api/getListingsBySchool", {
         school: school,
       });
-
-      setListings(data);
+      setListings(data.filter((e) => e.active));
     };
 
     fetch();

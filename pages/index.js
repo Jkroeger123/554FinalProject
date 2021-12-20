@@ -4,6 +4,8 @@ import Script from 'next/script'
 import  {getToken}  from './../Utils/firebase'
 import  { useEffect, useState } from "react";
 import { useUser } from "../Components/UserContext";
+import Landing from '../Components/Landing/Pages/Homepage/Home'
+
 
 export default function Home() {
 
@@ -18,7 +20,8 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
         
       </Head>
-      
+      <Landing />
+
       <Listings />
       <Script 
           src='https://service.force.com/embeddedservice/5.0/esw.min.js'
@@ -101,6 +104,8 @@ export default function Home() {
       `
           
 
+
+      
 
 
         }</Script>

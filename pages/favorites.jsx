@@ -1,11 +1,32 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Card from "../Components/Cards/ListingCard";
 import { Grid, Typography, Divider, Button } from "@mui/material";
-import data from "../Utils/db/favoriteListings";
+import axios from "axios";
+import { auth } from "../Utils/firebase";
+import UserProvider from "../Components/UserContext";
 
-function favorites() {
+function Favorites() {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetch = async () => {
+      try {
+        let idToken = await auth.currentUser.getIdToken();
+        let { data } = await axios.post("/api/getFavorites", {
+          idToken,
+        });
+        setData(data);
+      } catch {
+        // user not logged in, will automatically redirect
+        // but we need the try/catch to prevent an error
+        setData([]);
+      }
+    };
+    fetch();
+  }, []);
+
   return (
-    <div>
+    <UserProvider protectedRoute>
       <div style={{ display: "flex", justifyContent: "space-between" }}>
         <Typography
           variant="h4"
@@ -39,8 +60,8 @@ function favorites() {
           </Grid>
         ))}
       </Grid>
-    </div>
+    </UserProvider>
   );
 }
 
-export default favorites;
+export default Favorites;
