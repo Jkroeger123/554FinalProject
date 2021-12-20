@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Listings from '../Components/Listings'
+import Listings from './../Components/Listing'
 import Script from 'next/script'
 import  {getToken}  from './../Utils/firebase'
 import  { useEffect, useState } from "react";
