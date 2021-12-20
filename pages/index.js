@@ -1,5 +1,5 @@
 import Head from 'next/head'
-import Listings from '../Components/Listings'
+import Landing from '../Components/Landing/Pages/Homepage/Home'
 
 export default function Home() {
 
@@ -12,7 +12,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       
-      <Listings />
+      <Landing />
 
     </div>
   )

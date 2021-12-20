@@ -26,7 +26,7 @@ function NavBar() {
         }}
       >
         <IconButton
-          onClick={() => router.push("/")}
+          onClick={() => router.push("/listings")}
           edge="start"
           color="inherit"
           aria-label="menu"
