@@ -74,11 +74,11 @@ const EditButton = ({ listing, setListing }) => {
   const { user } = useUser();
   const [open, setOpen] = useState(false);
 
-  if (listing.madeBy === user.displayName) {
+  if (listing.posterID === user.uid){
     return (
       <>
         <Button
-          style={{ backgroundColor: "#A92C68" }}
+          style={{ backgroundColor: "#A92C68", marginBottom:"20px" }}
           variant="contained"
           onClick={() => {
             setOpen(true);
@@ -91,6 +91,7 @@ const EditButton = ({ listing, setListing }) => {
           onClose={() => {
             setOpen(false);
           }}
+          sx={{overflow: 'scroll'}}
         >
           <div>
             <ListingForm

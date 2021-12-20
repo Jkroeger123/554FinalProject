@@ -17,7 +17,7 @@ function TopProfile() {
                         src={user.photoURL}
                         style={{ width: "20vh", height: "20vh", marginLeft: '40px', marginTop: "40px"}}
                     />
-                    <Typography variant="h4" sx={{marginLeft: "20px", marginTop: "80px"}}>
+                    <Typography variant="h1" sx={{marginLeft: "20px", marginTop: "80px", fontSize: "40px"}}>
                         {user.displayName}
                     </Typography>
                 </div>

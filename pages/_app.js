@@ -1,21 +1,20 @@
 import '../styles/globals.css'
 import NavBar from '../Components/NavBar/NavBar'
-import Script from 'next/script'
-import UserProvider, {useUser} from '../Components/UserContext'
-import { auth } from './../Utils/firebase.js'
-
-
-
+import Head from 'next/head'
 
 function MyApp({ Component, pageProps }) {
-  
   return (
-  <div>
+    <>
+    <Head>
+        <title>U Marketplace</title>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
     <div style={{overflowX: 'hidden'}}>
       <NavBar />
       <Component {...pageProps} />
     </div>
-  </div>
+  </>
+
   );
 }
 

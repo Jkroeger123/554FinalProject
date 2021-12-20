@@ -1,5 +1,5 @@
 import db, {auth} from '../../Utils/db';
-import { validateUpdateUser } from "../../../../Utils/db/schema";
+import { validateUpdateUser } from "../../Utils/db/schema";
 
 export default async (req, res) => {
   
