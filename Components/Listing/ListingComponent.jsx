@@ -74,7 +74,7 @@ const EditButton = ({ listing, setListing }) => {
   const { user } = useUser();
   const [open, setOpen] = useState(false);
 
-  if (listing.posterID === user.uid)
+  if (listing.posterID === user.uid){
     return (
       <>
         <Button
