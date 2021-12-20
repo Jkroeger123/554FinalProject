@@ -5,7 +5,7 @@ import axios from "axios";
 import { auth } from "../Utils/firebase";
 import UserProvider from "../Components/UserContext";
 
-function favorites() {
+function Favorites() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -13,11 +13,11 @@ function favorites() {
       try {
         let idToken = await auth.currentUser.getIdToken();
         let { data } = await axios.post("/api/getFavorites", {
-          idToken
+          idToken,
         });
         setData(data);
       } catch {
-        // user not logged in, will automatically redirect 
+        // user not logged in, will automatically redirect
         // but we need the try/catch to prevent an error
         setData([]);
       }
@@ -64,4 +64,4 @@ function favorites() {
   );
 }
 
-export default favorites;
+export default Favorites;
