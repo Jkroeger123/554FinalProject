@@ -25,11 +25,12 @@ export default function Home() {
           strategy='beforeInteractive'
           />
         <Script
-          strategy='afterInteractive'
+          strategy='lazyOnload'
         >{`
           console.log('hello');
           
-          console.log(window.localStorage.token);
+          console.log(window.localStorage.getItem('name'));
+
           var initESW = function(gslbBaseURL) {
           embedded_svc.settings.displayHelpButton = true; //Or false
           embedded_svc.settings.language = ''; //For example, enter 'en' or 'en-US'
@@ -59,6 +60,12 @@ export default function Home() {
             "transcriptFields":["accessToken__c"],
             "value": window.localStorage.getItem("token"),
             "displayToAgent": false
+          },
+          {
+            "transcriptFields":["emailNew __c"],
+            "label": "Email",
+            "value": window.localStorage.getItem("email"),
+            "displayToAgent": true
           }
           ];
           embedded_svc.settings.enabledFeatures = ['LiveAgent'];

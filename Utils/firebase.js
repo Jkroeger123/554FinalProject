@@ -31,6 +31,8 @@ const signInWithGoogle = async () => {
     let idToken = await auth.currentUser.getIdToken();
     window.localStorage.setItem('token', idToken);
     window.localStorage.setItem('name', user.displayName);
+    window.localStorage.setItem('email', user.email);
+    console.log(user);
     let newUser = await axios.post('/api/createUser', {
       idToken,
       user
