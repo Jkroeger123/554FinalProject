@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import Listings from './../Components/Listing'
 import Script from 'next/script'
 import  {getToken}  from './../Utils/firebase'
 import  { useEffect, useState } from "react";
@@ -22,7 +21,6 @@ export default function Home() {
       </Head>
       <Landing />
 
-      <Listings />
       <Script 
           src='https://service.force.com/embeddedservice/5.0/esw.min.js'
           strategy='beforeInteractive'
